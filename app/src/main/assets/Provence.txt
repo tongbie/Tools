@@ -1,0 +1,1 @@
+[{"id":799,"name":"济南","weather_id":"CN101120101"},{"id":800,"name":"长清","weather_id":"CN101120102"},{"id":801,"name":"商河","weather_id":"CN101120103"},{"id":802,"name":"章丘","weather_id":"CN101120104"},{"id":803,"name":"平阴","weather_id":"CN101120105"},{"id":804,"name":"济阳","weather_id":"CN101120106"}]

@@ -1,0 +1,43 @@
+<resources>
+
+    <!--应用主题-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#00bbca</item>
+        <item name="colorPrimaryDark">#00bbca</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--启动界面-->
+    <style name="WelcomeTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/img_4</item>
+    </style>
+
+    <!--通知-->
+    <style name="Notification" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#00c8a4</item>
+        <item name="colorPrimaryDark">#00c8a4</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--计算器-->
+    <style name="Counter" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!--相机-->
+    <style name="Camema" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#6d6d6d</item>
+        <item name="colorPrimaryDark">#6d6d6d</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--二维码-->
+    <style name="QRCode" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#01a6de</item>
+        <item name="colorPrimaryDark">#01a6de</item>
+        <item name="colorAccent">#FF4081</item>
+    </style>
+</resources>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.myapplication">
+
+    <uses-permission android:name="android.permission.ACCESS_COATSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 开启闪光灯权限 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.autofocus" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/round"
+        android:label="Tools"
+        android:roundIcon="@drawable/round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.cameraalbumtest.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+            <!-- 百度地图 -->
+            <meta-data
+                android:name="com.baidu.lbsapi.API_KEY"
+                android:value="YBCiGQnGClwxuqGRVeqXjc4G0h53rrjO" />
+        </provider>
+        <!-- 主活动 -->
+        <activity android:name=".MainActivity" />
+        <!-- 计算器 -->
+        <activity
+            android:name=".Counter"
+            android:theme="@style/Counter" />
+        <!-- 返回键 -->
+        <!-- 启动界面 -->
+        <activity
+            android:name=".UI.StartActivity"
+            android:theme="@style/WelcomeTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 相机 -->
+        </activity>
+        <!-- 通知 -->
+        <activity
+            android:name=".Notification"
+            android:label="通知"
+            android:theme="@style/Notification" />
+        <!-- 百度地图 -->
+        <!-- 服务.百度地图 -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+        <!-- Wifi连接 -->
+        <!-- 网络 -->
+        <activity android:name=".NetworkTest" />
+        <!-- 二维码 -->
+        <activity
+            android:name=".QRCode"
+            android:label="二维码"
+            android:theme="@style/QRCode" />
+        <!-- 地图 -->
+        <activity android:name=".WeatherPackage.Weather"></activity>
+    </application>
+
+</manifest>
