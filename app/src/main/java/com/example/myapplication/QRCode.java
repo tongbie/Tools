@@ -13,8 +13,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
@@ -29,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
@@ -112,15 +111,9 @@ public class QRCode extends AppCompatActivity implements View.OnClickListener {
                 }
                 break;
             case R.id.sweep:    //扫描
-                Toast.makeText(QRCode.this, "这个暂时不能用", Toast.LENGTH_SHORT).show();
-                SoundPool soundPool = new SoundPool(1, AudioManager.STREAM_SYSTEM, 100);
-                //(int 支持多少声音,int 声音类型,int 声音品质);
-                soundPool.load(this, R.raw.start, 1);
-                soundPool.play(soundPool.load(QRCode.this, R.raw.start, 1), 1, 1, 0, 0, 1);
+                Intent intent = new Intent(QRCode.this, CaptureActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
                 break;
-//                Intent intent = new Intent(QRCode.this, CaptureActivity.class);
-//                startActivityForResult(intent, REQUEST_CODE);
-//                break;
             case R.id.clean:
                 image.setImageDrawable(null);
                 edit.setText(null);
