@@ -34,21 +34,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import static com.example.myapplication.R.id.send;
+
 public class Notification extends AppCompatActivity implements View.OnClickListener {
-    ImageButton sign1;
-    ImageButton sign2;
-    ImageButton sign3;
-    ImageButton sign4;
-    Button send;    //以选中图标发送
-    Button chooseFromAlbum;
     Button circular;    //绘制为圆形
     Boolean circular_judge = false;    //判断是否裁剪为圆形
     EditText title;
     Bitmap bmp = null;
     EditText text;
     private ImageView picture;
-    public static final int CHOOSE_PHOTO = 2;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +54,11 @@ public class Notification extends AppCompatActivity implements View.OnClickListe
         ViewGroup.LayoutParams layoutParams = NotificationLinearLayout.getLayoutParams();
         layoutParams.height = ((WindowManager) this.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth() / 4;    //设置四个图标高度
         NotificationLinearLayout.setLayoutParams(layoutParams);
-        sign1 = (ImageButton) findViewById(R.id.sign1);
-        sign2 = (ImageButton) findViewById(R.id.sign2);
-        sign3 = (ImageButton) findViewById(R.id.sign3);
-        sign4 = (ImageButton) findViewById(R.id.sign4);
-        send = (Button) findViewById(R.id.send);
+        ImageButton sign1 = (ImageButton) findViewById(R.id.sign1);
+        ImageButton sign2 = (ImageButton) findViewById(R.id.sign2);
+        ImageButton sign3 = (ImageButton) findViewById(R.id.sign3);
+        ImageButton sign4 = (ImageButton) findViewById(R.id.sign4);
+        Button send = (Button) findViewById(R.id.send);
         circular = (Button) findViewById(R.id.circular);    //绘制为圆形
         circular.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +78,7 @@ public class Notification extends AppCompatActivity implements View.OnClickListe
         sign3.setOnClickListener(this);
         sign4.setOnClickListener(this);
         send.setOnClickListener(this);
-        chooseFromAlbum = (Button) findViewById(R.id.choose_from_album);
+        Button chooseFromAlbum = (Button) findViewById(R.id.choose_from_album);
         chooseFromAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,7 +108,7 @@ public class Notification extends AppCompatActivity implements View.OnClickListe
             case R.id.sign4:
                 bmp = BitmapFactory.decodeResource(getResources(), R.drawable.sign4);
                 break;
-            case R.id.send:
+            case send:
 
         }
         Intent home=new Intent(Intent.ACTION_MAIN);    //返回桌面
@@ -151,13 +145,13 @@ public class Notification extends AppCompatActivity implements View.OnClickListe
     private void openAlbum() {    //打开相册选择照片
         Intent intent = new Intent("android.intent.action.GET_CONTENT");
         intent.setType("image/*");
-        startActivityForResult(intent, CHOOSE_PHOTO);
+        startActivityForResult(intent, 1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {    //回调函数
         switch (requestCode) {
-            case CHOOSE_PHOTO:
+            case 1:
                 handleImageOnKitKat(data);
         }
     }
@@ -199,15 +193,6 @@ public class Notification extends AppCompatActivity implements View.OnClickListe
         return BitmapFactory.decodeFile(imagePath, opt);
     }
 
-    /*private void displayImage(String imagePath) {    //显示相片,传入路径转换为Bitmap后显示
-        if (imagePath != null) {
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-            picture.setImageBitmap(bitmap);
-        } else {
-            Toast.makeText(Notification.this, "失败了", Toast.LENGTH_SHORT).show();
-        }
-    }*/
-
     private Bitmap createCircleImage(Bitmap source, int min)    //将图片绘制为圆形
     {
         final Paint paint = new Paint();
@@ -231,7 +216,6 @@ public class Notification extends AppCompatActivity implements View.OnClickListe
         //return new int[]{options.outWidth,options.outHeight};    //原方法返回值
         return options.outWidth;
     }
-
 
     private String getImagePath(Uri uri, String selection) {
         String path = null;
