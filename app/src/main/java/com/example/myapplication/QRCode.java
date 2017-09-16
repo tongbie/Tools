@@ -37,9 +37,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class QRCode extends AppCompatActivity implements View.OnClickListener {
-    private static final int REQUEST_CODE = 111;
-    public static final int CHOOSE_PHOTO = 222;
-    private boolean judgelogo = false;
+    private boolean judgelogo = false;    //判断是否带logo
     EditText edit;
     ImageView image = null;
 
@@ -50,15 +48,15 @@ public class QRCode extends AppCompatActivity implements View.OnClickListener {
         ZXingLibrary.initDisplayOpinion(this);    //zxing包初始操作
         edit = (EditText) findViewById(R.id.edit);
         image = (ImageView) findViewById(R.id.image);
-        Button sweep = (Button) findViewById(R.id.sweep);
+        Button sweep = (Button) findViewById(R.id.sweep);    //扫描
         sweep.setOnClickListener(this);
-        Button creat = (Button) findViewById(R.id.creat);
+        Button creat = (Button) findViewById(R.id.creat);    //生成
         creat.setOnClickListener(this);
-        Button clean = (Button) findViewById(R.id.clean);
+        Button clean = (Button) findViewById(R.id.clean);    //清除
         clean.setOnClickListener(this);
-        Button save = (Button) findViewById(R.id.save);
+        Button save = (Button) findViewById(R.id.save);    //保存
         save.setOnClickListener(this);
-        Button creatwithlogo = (Button) findViewById(R.id.creatwithlogo);
+        Button creatwithlogo = (Button) findViewById(R.id.creatwithlogo);    //生成带logo的二维码
         creatwithlogo.setOnClickListener(this);
         if (ContextCompat.checkSelfPermission(QRCode.this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(QRCode.this, new String[]{android.Manifest.permission.CAMERA}, 1);
@@ -70,19 +68,19 @@ public class QRCode extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.creatwithlogo:   //生成带logo二维码
+            case R.id.creatwithlogo:   //生成带logo的二维码
                 judgelogo = true;
             case R.id.creat:    //生成
-                image.getLayoutParams().height = image.getWidth();    //设置图片高度
+                image.getLayoutParams().height = image.getWidth();    //设置图片高度=宽度
                 if (edit.getText().toString().length() == 0) {
                     Toast.makeText(QRCode.this, "内容不能为空", Toast.LENGTH_SHORT).show();
                 } else {
                     if (judgelogo == false) {
                         image.setImageBitmap(bg2WhiteBitmap(CodeUtils.createImage(edit.getText().toString(), 400, 400, null)));
                     } else if (judgelogo == true) {
-                        Intent intent = new Intent("android.intent.action.GET_CONTENT");
+                        Intent intent = new Intent("android.intent.action.GET_CONTENT");    //调用系统程序
                         intent.setType("image/*");
-                        startActivityForResult(intent, CHOOSE_PHOTO);
+                        startActivityForResult(intent, 222);
                     }
                 }
                 break;
@@ -93,16 +91,16 @@ public class QRCode extends AppCompatActivity implements View.OnClickListener {
                 }
                 File fcreat = new File("/sdcard/Tools/");
                 if (!fcreat.exists()) {
-                    fcreat.mkdir();
+                    fcreat.mkdir();    //创建目录
                 }
                 File f = new File("/sdcard/Tools/", "(" + getFiles("/sdcard/Tools/") + ") " + edit.getText().toString().replace("/", "").replace(":", "").replace(".", "") + ".png");
                 try {
-                    FileOutputStream out = new FileOutputStream(f);
-                    image.setDrawingCacheEnabled(true);
-                    Bitmap.createBitmap(image.getDrawingCache()).compress(Bitmap.CompressFormat.PNG, 90, out);
+                    FileOutputStream out = new FileOutputStream(f);    //创建向f中写入数据的文件输出流
+                    image.setDrawingCacheEnabled(true);    //开启缓存，以类似截图方式?从ImageView对象获取图像
+                    Bitmap.createBitmap(image.getDrawingCache()).compress(Bitmap.CompressFormat.PNG, 90, out);     //创建一个带有特定宽度、高度和颜色格式的位图
                     image.setDrawingCacheEnabled(false);    //清空缓冲区
                     Toast.makeText(QRCode.this, "保存成功", Toast.LENGTH_SHORT).show();
-                    out.flush();
+                    out.flush();    //强制刷新缓冲区
                     out.close();
                 } catch (FileNotFoundException e) {
                     Toast.makeText(QRCode.this, "文件名不合法", Toast.LENGTH_SHORT).show();
@@ -112,9 +110,9 @@ public class QRCode extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.sweep:    //扫描
                 Intent intent = new Intent(QRCode.this, CaptureActivity.class);
-                startActivityForResult(intent, REQUEST_CODE);
+                startActivityForResult(intent, 111);
                 break;
-            case R.id.clean:
+            case R.id.clean:    //清除
                 image.setImageDrawable(null);
                 edit.setText(null);
                 break;
@@ -167,10 +165,10 @@ public class QRCode extends AppCompatActivity implements View.OnClickListener {
             String name = files[j].getName();
             if (files[j].isDirectory()) {
                 String dirPath = files[j].toString().toLowerCase();
-                System.out.println(dirPath);
+                //System.out.println(dirPath);
                 getFiles(dirPath + "/");
             } else if (files[j].isFile() & name.endsWith(".jpg") || name.endsWith(".png") || name.endsWith(".bmp") || name.endsWith(".gif") || name.endsWith(".jpeg")) {
-                System.out.println("FileName===" + files[j].getName());
+                //System.out.println("FileName===" + files[j].getName());
                 i++;
             }
         }
@@ -180,7 +178,7 @@ public class QRCode extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == 111) {
             if (null != data) {
                 Bundle bundle = data.getExtras();
                 if (bundle == null) {
@@ -198,7 +196,7 @@ public class QRCode extends AppCompatActivity implements View.OnClickListener {
                     Toast.makeText(QRCode.this, "解析二维码失败", Toast.LENGTH_SHORT).show();
                 }
             }
-        } else if (requestCode == CHOOSE_PHOTO) {
+        } else if (requestCode == 222) {
             handleImageOnKitKat(data);
         }
     }
@@ -226,7 +224,7 @@ public class QRCode extends AppCompatActivity implements View.OnClickListener {
         opt.inPreferredConfig = Bitmap.Config.RGB_565;
         opt.inPurgeable = true;
         opt.inInputShareable = true;
-        Bitmap bmp = BitmapFactory.decodeFile(imagePath, opt);
+        Bitmap bmp = BitmapFactory.decodeFile(imagePath, opt);    //路径转Bitmap
         judgelogo = false;
         image.setImageBitmap(bg2WhiteBitmap(CodeUtils.createImage(edit.getText().toString(), 400, 400, bmp)));
     }
