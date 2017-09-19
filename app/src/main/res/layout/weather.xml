@@ -8,7 +8,21 @@
     tools:context="com.example.myapplication.WeatherPackage.Weather">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/provence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxEms="1"
+        android:maxLines="1" />
+
+    <EditText
+        android:id="@+id/city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxEms="1"
+        android:maxLines="1" />
+
+    <EditText
+        android:id="@+id/area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxEms="1"
@@ -16,13 +30,18 @@
 
     <Button
         android:id="@+id/weather"
-        android:text="weather"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="weather" />
 
-    <TextView
-        android:id="@+id/textView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
 
 </LinearLayout>
