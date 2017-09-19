@@ -107,6 +107,10 @@ public class QRCode extends AppCompatActivity implements View.OnClickListener {
                 } catch (IOException e) {
                     Toast.makeText(QRCode.this, "发生未知错误", Toast.LENGTH_SHORT).show();
                 }
+                Intent saveIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);    //发送系统广播通知手机有图片更新
+                Uri uri = Uri.fromFile(f);
+                saveIntent.setData(uri);
+                this.sendBroadcast(saveIntent);
                 break;
             case R.id.sweep:    //扫描
                 Intent intent = new Intent(QRCode.this, CaptureActivity.class);
