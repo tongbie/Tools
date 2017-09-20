@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Counter extends Activity implements View.OnClickListener {
-    Handler uiHandler=new Handler();
+    Handler uiHandler = new Handler();
     Button b0;
     Button b1;
     Button b2;
@@ -31,10 +31,9 @@ public class Counter extends Activity implements View.OnClickListener {
     Button deng;
     Button point;
     Button change;
-    boolean pointer=false;
-    boolean theme=true;
+    boolean pointer = false;
     EditText input;
-    String count=new String();
+    String count = new String();
 
 
     @Override
@@ -59,8 +58,8 @@ public class Counter extends Activity implements View.OnClickListener {
         cheng = (Button) findViewById(R.id.cheng);
         chu = (Button) findViewById(R.id.chu);
         deng = (Button) findViewById(R.id.deng);
-        point=(Button)findViewById(R.id.point);
-        change=(Button)findViewById(R.id.change);
+        point = (Button) findViewById(R.id.point);
+        change = (Button) findViewById(R.id.change);
         input = (EditText) findViewById(R.id.input);
 
         b0.setOnClickListener(this);
@@ -82,14 +81,13 @@ public class Counter extends Activity implements View.OnClickListener {
         deng.setOnClickListener(this);
         point.setOnClickListener(this);
         change.setOnClickListener(this);
-        //修改状态栏
+        //修改通知栏
         Window window = getWindow();
         window.setStatusBarColor(Color.parseColor("#e9191919"));//可以自定义状态栏颜色
     }
 
     @Override
     public void onClick(View v) {
-        //String count = input.getText().toString();
         ButtonBackground color = new ButtonBackground();
         switch (v.getId()) {
             case R.id.b0:
@@ -100,11 +98,11 @@ public class Counter extends Activity implements View.OnClickListener {
                         if (count.charAt(0) == '0' && pointer == false)
                             break;
                 }*/
-                if(count.length()==1&&count.charAt(0)=='0')
+                if (count.length() == 1 && count.charAt(0) == '0')
                     break;
-                if(count.length()>2)
-                    if (count.charAt(count.length() - 2) == '+'||count.charAt(count.length() - 2) == '-'||count.charAt(count.length() - 2) == '*'||count.charAt(count.length() - 2) == '/')
-                        if(count.charAt(count.length() - 1) == '0')
+                if (count.length() > 2)
+                    if (count.charAt(count.length() - 2) == '+' || count.charAt(count.length() - 2) == '-' || count.charAt(count.length() - 2) == '*' || count.charAt(count.length() - 2) == '/')
+                        if (count.charAt(count.length() - 1) == '0')
                             break;
                 count += "0";
                 break;
@@ -189,7 +187,7 @@ public class Counter extends Activity implements View.OnClickListener {
             case R.id.jia:
                 color.start();
                 jia.setBackgroundColor(Color.parseColor("#94343c"));
-                pointer=false;
+                pointer = false;
                 if (count.length() == 0)
                     break;
                 if (count.length() > 0)
@@ -200,7 +198,7 @@ public class Counter extends Activity implements View.OnClickListener {
             case R.id.jian:
                 color.start();
                 jian.setBackgroundColor(Color.parseColor("#94343c"));
-                pointer=false;
+                pointer = false;
                 if (count.length() > 0) {
                     if (count.charAt(count.length() - 1) == '+' || count.charAt(count.length() - 1) == '-' || count.charAt(count.length() - 1) == '*' || count.charAt(count.length() - 1) == '/' || count.charAt(count.length() - 1) == '.')
                         break;
@@ -210,7 +208,7 @@ public class Counter extends Activity implements View.OnClickListener {
             case R.id.cheng:
                 color.start();
                 cheng.setBackgroundColor(Color.parseColor("#94343c"));
-                pointer=false;
+                pointer = false;
                 if (count.length() == 0)
                     break;
                 if (count.length() > 0) {
@@ -222,7 +220,7 @@ public class Counter extends Activity implements View.OnClickListener {
             case R.id.chu:
                 color.start();
                 chu.setBackgroundColor(Color.parseColor("#94343c"));
-                pointer=false;
+                pointer = false;
                 if (count.length() == 0)
                     break;
                 if (count.length() > 0) {
@@ -231,33 +229,10 @@ public class Counter extends Activity implements View.OnClickListener {
                 }
                 count += "/";
                 break;
-            case R.id.change:
-                /*if(theme==true){
-                    setContentView(R.layout.counter1_layout);
-                    theme=false;
-                    break;
-                }
-                else {
-                    setContentView(R.layout.counter);
-                    theme=true;
-                }
-                break;*/
-                /*AlertDialog.Builder diglog=new AlertDialog.Builder(Counter.this);
-                diglog.setTitle("提示");
-                diglog.setMessage("这个按钮暂时没什么用");
-                diglog.setCancelable(true);
-                diglog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-                diglog.show();*/
-                break;
             case R.id.deng:
                 color.start();
                 deng.setBackgroundColor(Color.parseColor("#2d313e"));
-                pointer=false;
+                pointer = false;
                 if (count.length() == 0)
                     break;
                 if (count.length() > 0) {
@@ -298,40 +273,24 @@ public class Counter extends Activity implements View.OnClickListener {
         input.setText(count);
     }
 
-    public double Counter(String reckon){
-        double intenger[]=new double[28];
-        char character[]=new char[28];
-        int intenger1=0,character1=0,position=0,i,j;
-        boolean judge=false;
-        int sign[]=new int[28];
-        if(reckon.charAt(0)=='-'){
-            reckon=reckon.substring(1);
-            judge=true;
+    private double Counter(String reckon) {
+        double intenger[] = new double[42];
+        char character[] = new char[42];
+        int intenger1 = 0, character1 = 0, position = 0, i, j;
+        boolean judge = false;
+        char characterKind;
+        if (reckon.charAt(0) == '-') {
+            reckon = reckon.substring(1);
+            judge = true;
         }
-        reckon+='+';
+        reckon += '+';
         try {
             while (reckon.length() > 1) {
-                if (reckon.charAt(0) == '+' || reckon.charAt(0) == '-' || reckon.charAt(0) == '*' || reckon.charAt(0) == '/') {
-                    if (reckon.charAt(0) == '+') {
-                        character[character1] = '+';
-                        character1++;
-                        reckon = reckon.substring(1);
-                    }
-                    if (reckon.charAt(0) == '-') {
-                        character[character1] = '-';
-                        character1++;
-                        reckon = reckon.substring(1);
-                    }
-                    if (reckon.charAt(0) == '*') {
-                        character[character1] = '*';
-                        character1++;
-                        reckon = reckon.substring(1);
-                    }
-                    if (reckon.charAt(0) == '/') {
-                        character[character1] = '/';
-                        character1++;
-                        reckon = reckon.substring(1);
-                    }
+                characterKind = reckon.charAt(0);
+                if (characterKind == '+' || characterKind == '-' || characterKind == '*' || characterKind == '/') {
+                    character[character1] = characterKind;
+                    character1++;
+                    reckon = reckon.substring(1);
                 } else {
                     while (reckon.charAt(position) != '+' && reckon.charAt(position) != '-' && reckon.charAt(position) != '*' && reckon.charAt(position) != '/') {
                         position++;
@@ -361,15 +320,8 @@ public class Counter extends Activity implements View.OnClickListener {
                         break;
                     }
                     if (character[j] == '/') {
-                        if(intenger[j+1]==0)
-                        {
-                            Runnable toast=new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(Counter.this, "不合法操作", Toast.LENGTH_LONG).show();
-                                }
-                            };
-                            uiHandler.post(toast);
+                        if (intenger[j + 1] == 0) {
+                            Toast.makeText(Counter.this, "不合法操作", Toast.LENGTH_LONG).show();
                             return intenger[j];
                         }
                         intenger[j + 1] = intenger[j] / intenger[j + 1];
@@ -413,17 +365,17 @@ public class Counter extends Activity implements View.OnClickListener {
                     }
                 }
             }
-        }catch (Exception e){
-            intenger[0]=0;
+        } catch (Exception e) {
+            intenger[0] = 0;
         }
         return intenger[0];
     }
 
-    public class ButtonBackground extends Thread{
-        public void run(){
+    public class ButtonBackground extends Thread {
+        public void run() {
             try {
                 Thread.sleep(220);
-                Runnable runnable=new Runnable() {
+                Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
                         b0.setBackgroundColor(Color.parseColor("#373b4a"));
@@ -451,11 +403,5 @@ public class Counter extends Activity implements View.OnClickListener {
                 e.printStackTrace();
             }
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        //android.os.Process.killProcess(android.os.Process.myPid());
     }
 }
