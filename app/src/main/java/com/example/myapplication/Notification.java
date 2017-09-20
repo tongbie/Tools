@@ -12,7 +12,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -23,11 +22,9 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,9 +33,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.myapplication.UI.BackAppCompatActivity;
+
 import static com.example.myapplication.R.id.send;
 
-public class Notification extends AppCompatActivity implements View.OnClickListener {
+public class Notification extends BackAppCompatActivity implements View.OnClickListener {
     Button circular;    //绘制为圆形
     EditText title;
     EditText text;
@@ -49,9 +48,9 @@ public class Notification extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Window window = getWindow();
-        window.setStatusBarColor(Color.parseColor("#00c8a4"));    //修改状态栏颜色
         setContentView(R.layout.notification);
+        selfDefinedSetActivityName("通知");
+        selfDefinedSetWindowColor("#00c8a4");
         picture = (ImageView) findViewById(R.id.picture);
         Toast.makeText(Notification.this, "使用此功能，需开启通知权限", Toast.LENGTH_SHORT).show();
         LinearLayout NotificationLinearLayout = (LinearLayout) findViewById(R.id.NotificationLinearLayout);
@@ -93,13 +92,15 @@ public class Notification extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
-        Button noficationback=(Button)findViewById(R.id.noficationback);
+//        SendSmsListener sendSmsListener=new SendSmsListener(this,);
+
+        /*Button noficationback=(Button)findViewById(R.id.noficationback);
         noficationback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
-        });
+        });*/
     }
 
     @Override

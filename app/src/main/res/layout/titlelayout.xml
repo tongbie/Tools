@@ -34,7 +34,7 @@
         android:layout_margin="5dp"
         android:textColor="#ffffff"
         android:layout_marginRight="20dp"
-        android:background="@drawable/menu"
+        android:background="@drawable/list"
         android:visibility="invisible"/>
 
 
