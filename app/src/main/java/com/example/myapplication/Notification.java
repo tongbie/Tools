@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -26,6 +27,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,15 +40,17 @@ import static com.example.myapplication.R.id.send;
 
 public class Notification extends AppCompatActivity implements View.OnClickListener {
     Button circular;    //绘制为圆形
-    Boolean circular_judge = false;    //判断是否裁剪为圆形
     EditText title;
-    Bitmap bmp = null;
     EditText text;
+    private Boolean circular_judge = false;    //判断是否裁剪为圆形
+    private Bitmap bmp = null;
     private ImageView picture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Window window = getWindow();
+        window.setStatusBarColor(Color.parseColor("#00c8a4"));    //修改状态栏颜色
         setContentView(R.layout.notification);
         picture = (ImageView) findViewById(R.id.picture);
         Toast.makeText(Notification.this, "使用此功能，需开启通知权限", Toast.LENGTH_SHORT).show();
@@ -87,6 +91,13 @@ public class Notification extends AppCompatActivity implements View.OnClickListe
                 } else {
                     openAlbum();
                 }
+            }
+        });
+        Button noficationback=(Button)findViewById(R.id.noficationback);
+        noficationback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }
