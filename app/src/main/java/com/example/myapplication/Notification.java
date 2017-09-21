@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentUris;
@@ -52,7 +53,6 @@ public class Notification extends BackAppCompatActivity implements View.OnClickL
         selfDefinedSetActivityName("通知");
         selfDefinedSetWindowColor("#00c8a4");
         picture = (ImageView) findViewById(R.id.picture);
-        Toast.makeText(Notification.this, "使用此功能，需开启通知权限", Toast.LENGTH_SHORT).show();
         LinearLayout NotificationLinearLayout = (LinearLayout) findViewById(R.id.NotificationLinearLayout);
         ViewGroup.LayoutParams layoutParams = NotificationLinearLayout.getLayoutParams();
         layoutParams.height = ((WindowManager) this.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth() / 4;    //设置四个图标高度
@@ -62,6 +62,7 @@ public class Notification extends BackAppCompatActivity implements View.OnClickL
         ImageButton sign3 = (ImageButton) findViewById(R.id.sign3);
         ImageButton sign4 = (ImageButton) findViewById(R.id.sign4);
         Button send = (Button) findViewById(R.id.send);
+        Button alertDialog=(Button)findViewById(R.id.alertDialog);
         circular = (Button) findViewById(R.id.circular);    //绘制为圆形
         circular.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +82,17 @@ public class Notification extends BackAppCompatActivity implements View.OnClickL
         sign3.setOnClickListener(this);
         sign4.setOnClickListener(this);
         send.setOnClickListener(this);
+        alertDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dialog=new AlertDialog.Builder(Notification.this);
+                dialog.setTitle("通知")
+                        .setMessage("请到 “设置” - “通知中心” - “应用通知” - “Tools” 中允许通知")
+                        .setPositiveButton("OK",null)
+                        .setCancelable(true)
+                        .show();
+            }
+        });
         Button chooseFromAlbum = (Button) findViewById(R.id.choose_from_album);
         chooseFromAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,15 +104,14 @@ public class Notification extends BackAppCompatActivity implements View.OnClickL
                 }
             }
         });
-//        SendSmsListener sendSmsListener=new SendSmsListener(this,);
 
-        /*Button noficationback=(Button)findViewById(R.id.noficationback);
+        Button noficationback=(Button)findViewById(R.id.backButton);
         noficationback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
-        });*/
+        });
     }
 
     @Override
