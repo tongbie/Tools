@@ -7,36 +7,64 @@
     android:orientation="vertical"
     tools:context="com.example.myapplication.WeatherPackage.Weather">
 
-    <EditText
-        android:id="@+id/provence"
+    <include layout="@layout/backtitlelayout" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxEms="1"
-        android:maxLines="1" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
-    <EditText
-        android:id="@+id/city"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxEms="1"
-        android:maxLines="1" />
+        <EditText
+            android:id="@+id/provence"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxEms="1"
+            android:maxLines="1" />
 
-    <EditText
-        android:id="@+id/area"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxEms="1"
-        android:maxLines="1" />
+        <EditText
+            android:id="@+id/city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxEms="1"
+            android:maxLines="1" />
 
-    <Button
+        <EditText
+            android:id="@+id/area"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxEms="1"
+            android:maxLines="1" />
+    </LinearLayout>
+
+
+
+    <com.dd.processbutton.iml.ActionProcessButton
         android:id="@+id/weather"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="weather" />
+        android:text="查   询"
+        android:textSize="18dp"
+        android:textColor="#ffffff"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        tools:pb_colorComplete="@color/green_complete"
+        tools:pb_colorError="@color/red_error"
+        tools:pb_colorNormal="?colorPrimaryDark"
+        tools:pb_colorPressed="#303e9f"
+        tools:pb_colorProgress="@color/purple_progress"
+        tools:pb_textComplete="1"
+        tools:pb_textError="2"
+        tools:pb_textProgress="3"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
         <TextView
             android:id="@+id/textView"

@@ -1,8 +1,8 @@
 package com.example.myapplication.WeatherPackage;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dd.processbutton.iml.ActionProcessButton;
 import com.example.myapplication.R;
+import com.example.myapplication.UI.BackAppCompatActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -23,18 +25,32 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class Weather extends AppCompatActivity implements View.OnClickListener {
+public class Weather extends BackAppCompatActivity implements View.OnClickListener {
+    Handler WeatherUiHandler = new Handler();
     TextView textView;
     EditText provence;
     EditText city;
     EditText area;
+    ActionProcessButton weather;
+    String weather_Id = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weather);
-        Button weather = (Button) findViewById(R.id.weather);
+        selfDefinedSetActivityName("天气");
+        selfDefinedSetWindowColor("#1c80f0");
+        weather = (ActionProcessButton) findViewById(R.id.weather);    //ActionProcessButton
         weather.setOnClickListener(this);
+
+
+        Button backButton = (Button) findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         textView = (TextView) findViewById(R.id.textView);
         provence = (EditText) findViewById(R.id.provence);
         city = (EditText) findViewById(R.id.city);
@@ -52,16 +68,41 @@ public class Weather extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.weather:
-                String provenceId = getCityId(provence.getText().toString(), "", "", "省");
-                String cityId = getCityId(city.getText().toString(), "/" + provenceId, "", "市");
-                String weather_Id = getCityId(area.getText().toString(), "/" + provenceId, "/" + cityId, "区");
-                //textView.setText(weather_Id);
-                getWeatherReturn(weather_Id);
+                weather.setProgress(1);
+//                final ProgressGenerator progressGenerator = new ProgressGenerator();
+//                progressGenerator.start(weather);
+//                weather.setEnabled(false);
+                /*ProgressDialog progressDialog = new ProgressDialog(Weather.this);
+                progressDialog.setTitle("天气");
+                progressDialog.setMessage("Loading...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();*/
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (provence.getText().equals("北京") || provence.getText().equals("天津") || provence.getText().equals("上海")) {
+                            weather_Id = getCityId(provence.getText().toString(), "", "", "省");
+                        } else {
+                            String provenceId = getCityId(provence.getText().toString(), "", "", "省");
+                            String cityId = getCityId(city.getText().toString(), "/" + provenceId, "", "市");
+                            weather_Id = getCityId(area.getText().toString(), "/" + provenceId, "/" + cityId, "区");
+                        }
+                        getWeatherReturn(weather_Id);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                weather.setProgress(0);
+                            }
+                        });
+                    }
+                });
+                thread.start();
+//                progressDialog.cancel();
         }
     }
 
+    /* private String getWeatherId(String 地区名, String 省Id, String 市Id, String 省/市/区) */
     private String getCityId(String resionName, String provenceId, String cityId, String resionKind) {
-        //private String getWeatherId(String 地区名, String 省Id, String 市Id, String 省/市/区)
         String weatherId = null;
         try {
             OkHttpClient weatherClient = new OkHttpClient();
@@ -91,12 +132,13 @@ public class Weather extends AppCompatActivity implements View.OnClickListener {
                 }
             }
         } catch (Exception e) {
-            Toast.makeText(this, "发生错误-" + resionKind, Toast.LENGTH_SHORT).show();
+
         }
         Toast.makeText(this, "未查询到-" + resionKind, Toast.LENGTH_SHORT).show();
         return "error";
     }
 
+    /*获取天气json数据*/
     private String getWeatherReturn(String weather_Id) {
         try {
             OkHttpClient weatherReturnClient = new OkHttpClient();
@@ -107,17 +149,30 @@ public class Weather extends AppCompatActivity implements View.OnClickListener {
             String weatherReturnGson = response.body().string();
             Gson weatherReturn = new Gson();
             WeatherReturn weatherReturnData = weatherReturn.fromJson(weatherReturnGson, WeatherReturn.class);
-            textView.setText(weatherReturnData.getHeWeather().get(0).getBasic().getCity().toString() + "\n" +
-                    weatherReturnData.getHeWeather().get(0).getNow().getCond().getTxt().toString() + "\n" +
-                    weatherReturnData.getHeWeather().get(0).getNow().getTmp().toString() + "度" + "\n" +
-                    weatherReturnData.getHeWeather().get(0).getSuggestion().getDrsg().getTxt().toString());
-
-//            String string=weatherReturnData.get(1).toString();
-//            textView.setText(string);
+            ValueRunnable valueRunnable=new ValueRunnable();
+            valueRunnable.setWeatherReturn(weatherReturnData);
+            Thread thread=new Thread(valueRunnable);
+            WeatherUiHandler.post(thread);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /*用以实现向Runnable中传值*/
+    private class ValueRunnable implements Runnable{
+        private WeatherReturn weatherReturnData;
+        public void setWeatherReturn(WeatherReturn weatherReturnData)
+        {
+            this.weatherReturnData = weatherReturnData;
+        }
+        @Override
+        public void run() {
+            textView.setText(weatherReturnData.getHeWeather().get(0).getBasic().getCity().toString() + "\n" +
+                    weatherReturnData.getHeWeather().get(0).getNow().getCond().getTxt().toString() + "\n" +
+                    weatherReturnData.getHeWeather().get(0).getNow().getTmp().toString() + "度" + "\n" +
+                    weatherReturnData.getHeWeather().get(0).getSuggestion().getDrsg().getTxt().toString());
+        }
     }
 
     //本地读取json文件
