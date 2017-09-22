@@ -37,10 +37,6 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-            <!-- 百度地图 -->
-            <meta-data
-                android:name="com.baidu.lbsapi.API_KEY"
-                android:value="YBCiGQnGClwxuqGRVeqXjc4G0h53rrjO" />
         </provider>
         <!-- 主活动 -->
         <activity android:name=".MainActivity" />
@@ -64,23 +60,17 @@
         <activity
             android:name=".Notification"
             android:label="通知"
-            android:theme="@style/Notification" />
-        <!-- 百度地图 -->
-        <!-- 服务.百度地图 -->
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote" />
-        <!-- Wifi连接 -->
+            android:theme="@style/NoActionBar" />
         <!-- 网络 -->
         <activity android:name=".NetworkTest" />
         <!-- 二维码 -->
         <activity
             android:name=".QRCode"
             android:label="二维码"
-            android:theme="@style/QRCode" />
-        <!-- 地图 -->
-        <activity android:name=".WeatherPackage.Weather"></activity>
+            android:theme="@style/NoActionBar" />
+        <!-- 天气 -->
+        <activity android:name=".WeatherPackage.Weather" />
+        <activity android:name=".CourseTable"></activity>
     </application>
 
 </manifest>

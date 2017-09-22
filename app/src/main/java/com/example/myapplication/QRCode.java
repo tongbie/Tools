@@ -20,13 +20,13 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.myapplication.UI.BackAppCompatActivity;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
@@ -36,7 +36,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class QRCode extends AppCompatActivity implements View.OnClickListener {
+public class QRCode extends BackAppCompatActivity implements View.OnClickListener {
     private boolean judgelogo = false;    //判断是否带logo
     EditText edit;
     ImageView image = null;
@@ -45,6 +45,8 @@ public class QRCode extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qrcode);
+        selfDefinedSetActivityName("二维码");
+        selfDefinedSetWindowColor("#01a6de");
         ZXingLibrary.initDisplayOpinion(this);    //zxing包初始操作
         edit = (EditText) findViewById(R.id.edit);
         image = (ImageView) findViewById(R.id.image);
@@ -58,6 +60,13 @@ public class QRCode extends AppCompatActivity implements View.OnClickListener {
         save.setOnClickListener(this);
         Button creatwithlogo = (Button) findViewById(R.id.creatwithlogo);    //生成带logo的二维码
         creatwithlogo.setOnClickListener(this);
+        Button backButton=(Button)findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         if (ContextCompat.checkSelfPermission(QRCode.this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(QRCode.this, new String[]{android.Manifest.permission.CAMERA}, 1);
         } else if (ContextCompat.checkSelfPermission(QRCode.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {

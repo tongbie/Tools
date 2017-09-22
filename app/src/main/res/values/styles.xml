@@ -14,8 +14,11 @@
         <item name="android:windowBackground">@drawable/img_4</item>
     </style>
 
+    <!--无标题栏-->
+    <style name="NoActionBar" parent="Theme.AppCompat.Light.NoActionBar" />
+
     <!--通知-->
-    <style name="Notification" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Notification" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#00c8a4</item>
         <item name="colorPrimaryDark">#00c8a4</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -32,12 +35,5 @@
         <item name="colorPrimary">#6d6d6d</item>
         <item name="colorPrimaryDark">#6d6d6d</item>
         <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <!--二维码-->
-    <style name="QRCode" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#01a6de</item>
-        <item name="colorPrimaryDark">#01a6de</item>
-        <item name="colorAccent">#FF4081</item>
     </style>
 </resources>

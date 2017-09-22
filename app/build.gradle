@@ -27,13 +27,17 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    //okhttp
+    //二维码包
+    //JSON
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'   //okhttp
-    compile 'cn.yipianfengye.android:zxing-library:2.2'    //二维码包
-    compile 'com.google.code.gson:gson:2.7'    //JSON
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'cn.yipianfengye.android:zxing-library:2.2'
+    compile 'com.google.code.gson:gson:2.7'
     testCompile 'junit:junit:4.12'
 }
+
 
 
 

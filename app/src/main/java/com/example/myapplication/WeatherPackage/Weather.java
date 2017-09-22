@@ -1,6 +1,7 @@
 package com.example.myapplication.WeatherPackage;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -38,10 +39,10 @@ public class Weather extends AppCompatActivity implements View.OnClickListener {
         provence = (EditText) findViewById(R.id.provence);
         city = (EditText) findViewById(R.id.city);
         area = (EditText) findViewById(R.id.area);
-        /*StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads()
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads()
                 .detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects()
-                .detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());*/
+                .detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
         provence.setText("山东");
         city.setText("济南");
         area.setText("长清");
@@ -105,8 +106,12 @@ public class Weather extends AppCompatActivity implements View.OnClickListener {
             Response response = weatherReturnClient.newCall(request).execute();
             String weatherReturnGson = response.body().string();
             Gson weatherReturn = new Gson();
-            WeatherReturn weatherReturnData = weatherReturn.fromJson(weatherReturnGson, new TypeToken<List<WeatherReturn>>() {
-            }.getType());
+            WeatherReturn weatherReturnData = weatherReturn.fromJson(weatherReturnGson, WeatherReturn.class);
+            textView.setText(weatherReturnData.getHeWeather().get(0).getBasic().getCity().toString() + "\n" +
+                    weatherReturnData.getHeWeather().get(0).getNow().getCond().getTxt().toString() + "\n" +
+                    weatherReturnData.getHeWeather().get(0).getNow().getTmp().toString() + "度" + "\n" +
+                    weatherReturnData.getHeWeather().get(0).getSuggestion().getDrsg().getTxt().toString());
+
 //            String string=weatherReturnData.get(1).toString();
 //            textView.setText(string);
         } catch (Exception e) {
