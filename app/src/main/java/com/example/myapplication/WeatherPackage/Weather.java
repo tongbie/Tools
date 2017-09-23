@@ -7,18 +7,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.example.myapplication.R;
 import com.example.myapplication.UI.BackAppCompatActivity;
+import com.example.myapplication.UI.GoogleCard;
+import com.example.myapplication.UI.GoogleCardAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -31,6 +35,7 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
     EditText provence;
     EditText city;
     EditText area;
+    private ListView mListView;
     ActionProcessButton weather;
     String weather_Id = null;
 
@@ -53,6 +58,11 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
         provence = (EditText) findViewById(R.id.provence);
         city = (EditText) findViewById(R.id.city);
         area = (EditText) findViewById(R.id.area);
+
+        mListView = (ListView) findViewById(R.id.ListView);
+        GoogleCardAdapter mAdapter = new GoogleCardAdapter(this, getItems());
+        mListView.setAdapter(mAdapter);
+
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads()
                 .detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects()
@@ -67,11 +77,11 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
         switch (view.getId()) {
             case R.id.weather:
                 weather.setProgress(1);
-                weather.setText("LOADING ...");
-                Thread onCLickThread=new Thread(new Runnable() {
+                weather.setText("Loading...");
+                Thread onCLickThread = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        try{
+                        try {
                             if (provence.getText().equals("北京") || provence.getText().equals("天津") || provence.getText().equals("上海")) {
                                 weather_Id = getCityId(provence.getText().toString(), "", "", "省");
                             } else {
@@ -86,13 +96,35 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
                                     weather.setProgress(0);
                                 }
                             });
-                        }catch (Exception e){
-                            e.printStackTrace();
+                        } catch (Exception e) {
+                            Toast.makeText(Weather.this, "未查询到结果", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
                 onCLickThread.start();
         }
+    }
+
+    private List<GoogleCard> getItems() {
+        List<GoogleCard> mCards = new ArrayList<GoogleCard>();
+        for (int i = 0; i < 4; i++) {
+            GoogleCard mCard = new GoogleCard("这是第" + (i + 1) + "张卡片", R.drawable.line);
+            mCards.add(mCard);
+        }
+        return mCards;
+    }
+
+    private int getResource(int Index) {
+        int mResult = 0;
+        switch (Index % 2) {
+            case 0:
+                mResult = R.drawable.circularbead;
+                break;
+            case 1:
+                mResult = R.drawable.circularbead;
+                break;
+        }
+        return mResult;
     }
 
     /* 从"guolin.tech/api/china"获取地区Id */
@@ -123,13 +155,13 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
                     if (weatherIdData.get(i).getName().equals(resionName)) {
                         weatherId = String.valueOf(weatherIdData.get(i).getWeather_id());
                         return weatherId;
+
                     }
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Toast.makeText(this, "未查询到-" + resionKind, Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(this, "未查询到-" + resionKind, Toast.LENGTH_SHORT).show();
         return "error";
     }
 
@@ -165,11 +197,17 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
         @Override
         public void run() {
             try {
-                textView.setText(weatherReturnData.getHeWeather().get(0).getBasic().getCity().toString() + "\n" +
-                        weatherReturnData.getHeWeather().get(0).getNow().getCond().getTxt().toString() + "\n" +
-                        weatherReturnData.getHeWeather().get(0).getNow().getTmp().toString() + "度" + "\n" +
-                        weatherReturnData.getHeWeather().get(0).getSuggestion().getDrsg().getTxt().toString());
-            }catch (Exception e){
+                String[] weatherReturn = new String[4];
+                weatherReturn[0] = weatherReturnData.getHeWeather().get(0).getBasic().getCity().toString() + "\n"
+                        + weatherReturnData.getHeWeather().get(0).getSuggestion().getDrsg().getTxt().toString() + "\n\n";
+                for (int i = 0; i < 3; i++) {
+                    weatherReturn[i + 1] += weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i).getDate() + "\n"
+                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i).getCond().getTxt_d() + "\n" + "最高温度："
+                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i).getTmp().getMax() + "度" + "  " + "最低温度："
+                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i).getTmp().getMin() + "度" + "\n\n";
+                }
+                textView.setText(weatherReturn[0]);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
