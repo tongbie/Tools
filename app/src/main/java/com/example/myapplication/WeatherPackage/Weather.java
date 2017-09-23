@@ -42,8 +42,6 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
         selfDefinedSetWindowColor("#1c80f0");
         weather = (ActionProcessButton) findViewById(R.id.weather);    //ActionProcessButton
         weather.setOnClickListener(this);
-
-
         Button backButton = (Button) findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,38 +67,35 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
         switch (view.getId()) {
             case R.id.weather:
                 weather.setProgress(1);
-//                final ProgressGenerator progressGenerator = new ProgressGenerator();
-//                progressGenerator.start(weather);
-//                weather.setEnabled(false);
-                /*ProgressDialog progressDialog = new ProgressDialog(Weather.this);
-                progressDialog.setTitle("天气");
-                progressDialog.setMessage("Loading...");
-                progressDialog.setCancelable(false);
-                progressDialog.show();*/
-                Thread thread = new Thread(new Runnable() {
+                weather.setText("LOADING ...");
+                Thread onCLickThread=new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        if (provence.getText().equals("北京") || provence.getText().equals("天津") || provence.getText().equals("上海")) {
-                            weather_Id = getCityId(provence.getText().toString(), "", "", "省");
-                        } else {
-                            String provenceId = getCityId(provence.getText().toString(), "", "", "省");
-                            String cityId = getCityId(city.getText().toString(), "/" + provenceId, "", "市");
-                            weather_Id = getCityId(area.getText().toString(), "/" + provenceId, "/" + cityId, "区");
-                        }
-                        getWeatherReturn(weather_Id);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                weather.setProgress(0);
+                        try{
+                            if (provence.getText().equals("北京") || provence.getText().equals("天津") || provence.getText().equals("上海")) {
+                                weather_Id = getCityId(provence.getText().toString(), "", "", "省");
+                            } else {
+                                String provenceId = getCityId(provence.getText().toString(), "", "", "省");
+                                String cityId = getCityId(city.getText().toString(), "/" + provenceId, "", "市");
+                                weather_Id = getCityId(area.getText().toString(), "/" + provenceId, "/" + cityId, "区");
                             }
-                        });
+                            getWeatherReturn(weather_Id);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    weather.setProgress(0);
+                                }
+                            });
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
                 });
-                thread.start();
-//                progressDialog.cancel();
+                onCLickThread.start();
         }
     }
 
+    /* 从"guolin.tech/api/china"获取地区Id */
     /* private String getWeatherId(String 地区名, String 省Id, String 市Id, String 省/市/区) */
     private String getCityId(String resionName, String provenceId, String cityId, String resionKind) {
         String weatherId = null;
@@ -132,7 +127,7 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
                 }
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         Toast.makeText(this, "未查询到-" + resionKind, Toast.LENGTH_SHORT).show();
         return "error";
@@ -149,33 +144,39 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
             String weatherReturnGson = response.body().string();
             Gson weatherReturn = new Gson();
             WeatherReturn weatherReturnData = weatherReturn.fromJson(weatherReturnGson, WeatherReturn.class);
-            ValueRunnable valueRunnable=new ValueRunnable();
+            ValueRunnable valueRunnable = new ValueRunnable();
             valueRunnable.setWeatherReturn(weatherReturnData);
-            Thread thread=new Thread(valueRunnable);
+            Thread thread = new Thread(valueRunnable);
             WeatherUiHandler.post(thread);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return "error";
     }
 
-    /*用以实现向Runnable中传值*/
-    private class ValueRunnable implements Runnable{
+    /* 用以实现向Runnable中传值 */
+    private class ValueRunnable implements Runnable {
         private WeatherReturn weatherReturnData;
-        public void setWeatherReturn(WeatherReturn weatherReturnData)
-        {
+
+        public void setWeatherReturn(WeatherReturn weatherReturnData) {
             this.weatherReturnData = weatherReturnData;
         }
+
         @Override
         public void run() {
-            textView.setText(weatherReturnData.getHeWeather().get(0).getBasic().getCity().toString() + "\n" +
-                    weatherReturnData.getHeWeather().get(0).getNow().getCond().getTxt().toString() + "\n" +
-                    weatherReturnData.getHeWeather().get(0).getNow().getTmp().toString() + "度" + "\n" +
-                    weatherReturnData.getHeWeather().get(0).getSuggestion().getDrsg().getTxt().toString());
+            try {
+                textView.setText(weatherReturnData.getHeWeather().get(0).getBasic().getCity().toString() + "\n" +
+                        weatherReturnData.getHeWeather().get(0).getNow().getCond().getTxt().toString() + "\n" +
+                        weatherReturnData.getHeWeather().get(0).getNow().getTmp().toString() + "度" + "\n" +
+                        weatherReturnData.getHeWeather().get(0).getSuggestion().getDrsg().getTxt().toString());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
-    //本地读取json文件
+    /* 本地读取json文件 */
+    /* private String getId(String 文件名, String  要读取的数据, String  用以比较的字符串, String  忘了);*/
     private String getId(String filename, String findname, String name, String returnfor) {
         String id = null;
         String catchname;
