@@ -69,7 +69,9 @@
             android:label="二维码"
             android:theme="@style/NoActionBar" />
         <!-- 天气 -->
-        <activity android:name=".WeatherPackage.Weather" />
+        <activity
+            android:name=".WeatherPackage.Weather"
+            android:theme="@style/NoActionBar" />
         <activity android:name=".CourseTable"></activity>
     </application>
 

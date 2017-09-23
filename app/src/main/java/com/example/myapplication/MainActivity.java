@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Intent qrcode = new Intent(MainActivity.this, QRCode.class);
                         startActivity(qrcode);
                         break;
-                    case "天气#":
+                    case "天气":
                         Intent weather = new Intent(MainActivity.this, Weather.class);
                         startActivity(weather);
                         break;
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fruitList.add(notification);
         Fruit qrcode = new Fruit("二维码", R.drawable.qrcode);
         fruitList.add(qrcode);
-        Fruit werther = new Fruit("天气#", R.drawable.weather);
+        Fruit werther = new Fruit("天气", R.drawable.weather);
         fruitList.add(werther);
         Fruit Null = new Fruit("Null", R.drawable.add);
         fruitList.add(Null);
