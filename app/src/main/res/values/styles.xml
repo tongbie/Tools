@@ -17,23 +17,9 @@
     <!--无标题栏-->
     <style name="NoActionBar" parent="Theme.AppCompat.Light.NoActionBar" />
 
-    <!--通知-->
-    <style name="Notification" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#00c8a4</item>
-        <item name="colorPrimaryDark">#00c8a4</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
     <!--计算器-->
     <style name="Counter" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
-
-    <!--相机-->
-    <style name="Camema" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#6d6d6d</item>
-        <item name="colorPrimaryDark">#6d6d6d</item>
-        <item name="colorAccent">@color/colorAccent</item>
     </style>
 </resources>

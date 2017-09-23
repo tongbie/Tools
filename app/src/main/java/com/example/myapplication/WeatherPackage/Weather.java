@@ -171,16 +171,31 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
         @Override
         public void run() {
             try {
-                String[] weatherReturn = new String[4];
-                weatherReturn[0] = weatherReturnData.getHeWeather().get(0).getBasic().getCity().toString() + "\n"
-                        + weatherReturnData.getHeWeather().get(0).getSuggestion().getDrsg().getTxt().toString();
-                for (int i = 0; i < 3; i++) {
-                    weatherReturn[i + 1] = weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i).getDate() + "\n"
-                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i).getCond().getTxt_d() + "\n" + "最高温度："
-                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i).getTmp().getMax() + "度" + "   " + "最低温度："
-                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i).getTmp().getMin() + "度";
+                String[] weatherReturn = new String[7];
+                weatherReturn[0] = weatherReturnData.getHeWeather().get(0).getBasic().getCity().toString() + "    "
+                        + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(0).getDate() + "\n天气："
+                        + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(0).getCond().getTxt_d() + "\n最高温度："
+                        + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(0).getTmp().getMax() + "度\n最低温度："
+                        + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(0).getTmp().getMin() + "度";
+                weatherReturn[1] = weatherReturnData.getHeWeather().get(0).getSuggestion().getDrsg().getTxt();
+                weatherReturn[2] = "空气质量：" + weatherReturnData.getHeWeather().get(0).getSuggestion().getAir().getBrf() + "，"
+                        + weatherReturnData.getHeWeather().get(0).getSuggestion().getAir().getTxt();
+                weatherReturn[3]="出行建议："
+                        + weatherReturnData.getHeWeather().get(0).getSuggestion().getSport().getBrf() + "，"
+                        + weatherReturnData.getHeWeather().get(0).getSuggestion().getSport().getTxt() ;
+                weatherReturn[4]="未来天气：";
+                for (int i = 5; i < 7; i++) {
+                    if(i==5){
+                        weatherReturn[i]="明天    ";
+                    }else if(i==6){
+                        weatherReturn[i]="后天    ";
+                    }
+                    weatherReturn[i] += weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i-4).getDate() + "\n"
+                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i-4).getCond().getTxt_d() + "\n" + "最高温度："
+                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i-4).getTmp().getMax() + "度" + "   " + "最低温度："
+                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i-4).getTmp().getMin() + "度";
                 }
-                setItems(weatherReturn, 4);
+                setItems(weatherReturn, 7);
             } catch (Exception e) {
                 e.printStackTrace();
             }
