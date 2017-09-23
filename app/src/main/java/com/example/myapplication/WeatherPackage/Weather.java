@@ -58,11 +58,7 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
         provence = (EditText) findViewById(R.id.provence);
         city = (EditText) findViewById(R.id.city);
         area = (EditText) findViewById(R.id.area);
-
         mListView = (ListView) findViewById(R.id.ListView);
-        GoogleCardAdapter mAdapter = new GoogleCardAdapter(this, getItems());
-        mListView.setAdapter(mAdapter);
-
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads()
                 .detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects()
@@ -97,34 +93,12 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
                                 }
                             });
                         } catch (Exception e) {
-                            Toast.makeText(Weather.this, "未查询到结果", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
                         }
                     }
                 });
                 onCLickThread.start();
         }
-    }
-
-    private List<GoogleCard> getItems() {
-        List<GoogleCard> mCards = new ArrayList<GoogleCard>();
-        for (int i = 0; i < 4; i++) {
-            GoogleCard mCard = new GoogleCard("这是第" + (i + 1) + "张卡片", R.drawable.line);
-            mCards.add(mCard);
-        }
-        return mCards;
-    }
-
-    private int getResource(int Index) {
-        int mResult = 0;
-        switch (Index % 2) {
-            case 0:
-                mResult = R.drawable.circularbead;
-                break;
-            case 1:
-                mResult = R.drawable.circularbead;
-                break;
-        }
-        return mResult;
     }
 
     /* 从"guolin.tech/api/china"获取地区Id */
@@ -199,18 +173,30 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
             try {
                 String[] weatherReturn = new String[4];
                 weatherReturn[0] = weatherReturnData.getHeWeather().get(0).getBasic().getCity().toString() + "\n"
-                        + weatherReturnData.getHeWeather().get(0).getSuggestion().getDrsg().getTxt().toString() + "\n\n";
+                        + weatherReturnData.getHeWeather().get(0).getSuggestion().getDrsg().getTxt().toString();
                 for (int i = 0; i < 3; i++) {
-                    weatherReturn[i + 1] += weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i).getDate() + "\n"
+                    weatherReturn[i + 1] = weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i).getDate() + "\n"
                             + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i).getCond().getTxt_d() + "\n" + "最高温度："
-                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i).getTmp().getMax() + "度" + "  " + "最低温度："
-                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i).getTmp().getMin() + "度" + "\n\n";
+                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i).getTmp().getMax() + "度" + "   " + "最低温度："
+                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i).getTmp().getMin() + "度";
                 }
-                textView.setText(weatherReturn[0]);
+                setItems(weatherReturn, 4);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    /*用来显示List*/
+    /* private void setItems(String[] 字符串数组, int 数组长度);*/
+    private void setItems(String[] weatherData, int itemNumber) {
+        List<GoogleCard> mCards = new ArrayList<GoogleCard>();
+        for (int i = 0; i < itemNumber; i++) {
+            GoogleCard mCard = new GoogleCard(weatherData[i], R.drawable.empty);
+            mCards.add(mCard);
+        }
+        GoogleCardAdapter mAdapter = new GoogleCardAdapter(this, mCards);
+        mListView.setAdapter(mAdapter);
     }
 
     /* 本地读取json文件 */
