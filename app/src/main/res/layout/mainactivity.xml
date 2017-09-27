@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.myapplication.MainActivity">
-    <include layout="@layout/titlelayout"/>
+
+    <include layout="@layout/titlelayout" />
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawerLayout"
@@ -16,14 +17,142 @@
         <FrameLayout
             android:id="@+id/mainFrameLauout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
+            android:layout_height="match_parent">
+
             <android.support.v4.view.ViewPager
                 android:id="@+id/mainViewPager"
                 android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:visibility="gone"></android.support.v4.view.ViewPager>
+
+            <com.example.myapplication.UI.BannerLayout
+                android:id="@+id/bannerlayout"
+                android:layout_width="match_parent"
                 android:layout_height="120dp">
 
-            </android.support.v4.view.ViewPager>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#00c8a4">
+
+                    <Button
+                        android:id="@+id/notification_banner"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/nofication_cheek" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginTop="18dp"
+                            android:text="Notification"
+                            android:textColor="#ffffff"
+                            android:textSize="28dp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="30dp"
+                            android:text="You can use it to send notification."
+                            android:maxLines="2"
+                            android:textColor="#ffffff"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#01a6de">
+
+                    <Button
+                        android:id="@+id/qrcode_banner"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/qrcode_cheek" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginTop="18dp"
+                            android:text="QRCode"
+                            android:textColor="#ffffff"
+                            android:textSize="28dp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="30dp"
+                            android:text="This fuction is used to sweep the QR Code."
+                            android:maxLines="2"
+                            android:textColor="#ffffff"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#1c80f0">
+
+                    <Button
+                        android:id="@+id/weather_banner"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/weather_cheek" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginTop="18dp"
+                            android:text="Weather"
+                            android:textColor="#ffffff"
+                            android:textSize="28dp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="30dp"
+                            android:text="The weather information will be show there."
+                            android:maxLines="2"
+                            android:textColor="#ffffff"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.example.myapplication.UI.BannerLayout>
         </FrameLayout>
 
         <ListView

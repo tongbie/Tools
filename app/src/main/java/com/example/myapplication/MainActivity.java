@@ -3,7 +3,6 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -27,10 +26,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List<Fruit> fruitList = new ArrayList<>();
     private Button titleList;
 
-    private ViewPager mainViewPager;
-    private List<View> mainViewList;
-    private View view1, view2, view3;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,53 +41,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         titleList = (Button) findViewById(R.id.title_list);
         titleList.setOnClickListener(this);
         Button titleMenu = (Button) findViewById(R.id.title_menu);
-
-        /* <ViewPager
-        mainViewPager = (ViewPager) findViewById(R.id.mainViewPager);
-        LayoutInflater layoutInflater = getLayoutInflater();
-        view1 = layoutInflater.inflate(R.layout.notification_view, null);
-        view2 = layoutInflater.inflate(R.layout.qrcode, null);
-        view3 = layoutInflater.inflate(R.layout.weather, null);
-        mainViewList = new ArrayList<View>();// 将要分页显示的View装入数组中
-        mainViewList.add(view1);
-        mainViewList.add(view2);
-        mainViewList.add(view3);
-        PagerAdapter pagerAdapter = new PagerAdapter() {
-//            PageAdapter 必须重写的四个函数：
-//            boolean isViewFromObject(View arg0, Object arg1)
-//            int getCount()
-//            void destroyItem(ViewGroup container, int position,Object object)
-//            Object instantiateItem(ViewGroup container, int position)
-
-            @Override
-            public boolean isViewFromObject(View arg0, Object arg1) {
-                return arg0 == arg1;
-            }
-
-//            返回要滑动的View的个数
-            @Override
-            public int getCount() {
-                return mainViewList.size();
-            }
-
-//            从当前container中删除指定位置（position）的View
-            @Override
-            public void destroyItem(ViewGroup container, int position,
-                                    Object object) {
-                container.removeView(mainViewList.get(position));
-            }
-
-//            将当前视图添加到container中，并返回当前View
-            @Override
-            public Object instantiateItem(ViewGroup container, int position) {
-                container.addView(mainViewList.get(position));
-                return mainViewList.get(position);
-            }
-        };
-        mainViewPager.setAdapter(pagerAdapter);
-        </ViewPager> */
-
         titleMenu.setOnClickListener(this);
+        Button notification_banner=(Button)findViewById(R.id.notification_banner);
+        notification_banner.setOnClickListener(this);
+        Button qrcode_banner=(Button)findViewById(R.id.qrcode_banner);
+        qrcode_banner.setOnClickListener(this);
+        Button weather_banner=(Button)findViewById(R.id.weather_banner);
+        weather_banner.setOnClickListener(this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -130,16 +85,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
                 if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     drawerLayout.closeDrawer(GravityCompat.START);
-//                    titleList.setBackground(getResources().getDrawable(R.drawable.list));
                 } else {
                     drawerLayout.openDrawer(GravityCompat.START);
-//                    titleList.setBackground(getResources().getDrawable(R.drawable.menu));
                 }
                 break;
+            case R.id.notification_banner:
+                Intent notification_banner=new Intent(MainActivity.this,Notification.class);
+                startActivity(notification_banner);
+                break;
+            case R.id.qrcode_banner:
+                Intent qrcode_banner=new Intent(MainActivity.this,QRCode.class);
+                startActivity(qrcode_banner);
+                break;
+            case R.id.weather_banner:
+                Intent weather_banner=new Intent(MainActivity.this,Weather.class);
+                startActivity(weather_banner);
         }
     }
 
-    private void initFruits() {    //为listView添加子项
+    //为listView添加子项
+    private void initFruits() {
         Fruit counter = new Fruit("计算器", R.drawable.counter);
         fruitList.add(counter);
         Fruit notification = new Fruit("通知", R.drawable.notification);
@@ -152,8 +117,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fruitList.add(Null);
     }
 
+    //监听返回键
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {    //监听返回键
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             exit();
             return true;
@@ -161,7 +127,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onKeyDown(keyCode, event);
     }
 
-    public void exit() {    //返回键
+    //返回键
+    public void exit() {
         if ((System.currentTimeMillis() - mExitTime) > 2000) {
             Toast.makeText(MainActivity.this, "再按一次退出", Toast.LENGTH_SHORT).show();
             mExitTime = System.currentTimeMillis();
