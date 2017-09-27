@@ -14,9 +14,17 @@
         android:layout_height="match_parent">
 
         <FrameLayout
-            android:id="@+id/frameLauout"
+            android:id="@+id/mainFrameLauout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone">
+            <android.support.v4.view.ViewPager
+                android:id="@+id/mainViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="120dp">
+
+            </android.support.v4.view.ViewPager>
+        </FrameLayout>
 
         <ListView
             android:id="@+id/listView"
@@ -28,4 +36,5 @@
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"></ListView>
     </android.support.v4.widget.DrawerLayout>
+
 </LinearLayout>

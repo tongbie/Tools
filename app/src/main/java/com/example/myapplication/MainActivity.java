@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +25,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private long mExitTime;    //返回键计时
     private List<Fruit> fruitList = new ArrayList<>();
-    Button titleList;
+    private Button titleList;
+
+    private ViewPager mainViewPager;
+    private List<View> mainViewList;
+    private View view1, view2, view3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         titleList = (Button) findViewById(R.id.title_list);
         titleList.setOnClickListener(this);
         Button titleMenu = (Button) findViewById(R.id.title_menu);
+
+        /* <ViewPager
+        mainViewPager = (ViewPager) findViewById(R.id.mainViewPager);
+        LayoutInflater layoutInflater = getLayoutInflater();
+        view1 = layoutInflater.inflate(R.layout.notification_view, null);
+        view2 = layoutInflater.inflate(R.layout.qrcode, null);
+        view3 = layoutInflater.inflate(R.layout.weather, null);
+        mainViewList = new ArrayList<View>();// 将要分页显示的View装入数组中
+        mainViewList.add(view1);
+        mainViewList.add(view2);
+        mainViewList.add(view3);
+        PagerAdapter pagerAdapter = new PagerAdapter() {
+//            PageAdapter 必须重写的四个函数：
+//            boolean isViewFromObject(View arg0, Object arg1)
+//            int getCount()
+//            void destroyItem(ViewGroup container, int position,Object object)
+//            Object instantiateItem(ViewGroup container, int position)
+
+            @Override
+            public boolean isViewFromObject(View arg0, Object arg1) {
+                return arg0 == arg1;
+            }
+
+//            返回要滑动的View的个数
+            @Override
+            public int getCount() {
+                return mainViewList.size();
+            }
+
+//            从当前container中删除指定位置（position）的View
+            @Override
+            public void destroyItem(ViewGroup container, int position,
+                                    Object object) {
+                container.removeView(mainViewList.get(position));
+            }
+
+//            将当前视图添加到container中，并返回当前View
+            @Override
+            public Object instantiateItem(ViewGroup container, int position) {
+                container.addView(mainViewList.get(position));
+                return mainViewList.get(position);
+            }
+        };
+        mainViewPager.setAdapter(pagerAdapter);
+        </ViewPager> */
+
         titleMenu.setOnClickListener(this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

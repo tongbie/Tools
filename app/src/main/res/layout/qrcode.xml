@@ -25,6 +25,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="1.5dp"
+            android:textColor="#ffffff"
+            android:textSize="18dp"
+            android:background="@drawable/qrcode_bead"
             android:text="生成" />
 
         <Button
@@ -32,6 +37,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginLeft="1.5dp"
+            android:layout_marginRight="1.5dp"
+            android:textColor="#ffffff"
+            android:textSize="18dp"
+            android:background="@drawable/qrcode_bead"
             android:text="扫描" />
 
         <Button
@@ -39,6 +49,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginLeft="1.5dp"
+            android:layout_marginRight="1.5dp"
+            android:textColor="#ffffff"
+            android:textSize="18dp"
+            android:background="@drawable/qrcode_bead"
             android:text="清除" />
 
         <Button
@@ -46,6 +61,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginLeft="1.5dp"
+            android:layout_marginRight="6dp"
+            android:textColor="#ffffff"
+            android:textSize="18dp"
+            android:background="@drawable/qrcode_bead"
             android:text="保存" />
     </LinearLayout>
 
@@ -53,6 +73,12 @@
         android:id="@+id/creatwithlogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="3dp"
+        android:textColor="#ffffff"
+        android:textSize="18dp"
+        android:background="@drawable/qrcode_bead"
         android:text="生成带logo的二维码" />
 
     <ImageView

@@ -9,6 +9,12 @@
 
     <include layout="@layout/backtitlelayout" />
 
+    <ListView
+        android:id="@+id/provenceListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,26 +68,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!--<ScrollView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginLeft="10dp"-->
-        <!--android:layout_marginRight="10dp">-->
 
-
-        <ListView
-            android:id="@+id/ListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:divider="@null"
-            android:dividerHeight="15dp"
-            android:scrollbarStyle="outsideOverlay">
-
-        </ListView>
-
-    <!--</ScrollView>-->
-
-
+    <ListView
+        android:id="@+id/ListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:divider="@null"
+        android:dividerHeight="15dp"
+        android:scrollbarStyle="outsideOverlay"></ListView>
 </LinearLayout>

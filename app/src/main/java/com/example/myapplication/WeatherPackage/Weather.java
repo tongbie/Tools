@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dd.processbutton.iml.ActionProcessButton;
@@ -24,20 +23,27 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class Weather extends BackAppCompatActivity implements View.OnClickListener {
     Handler WeatherUiHandler = new Handler();
-    TextView textView;
-    EditText provence;
-    EditText city;
-    EditText area;
+    private EditText provence;
+    private EditText city;
+    private EditText area;
     private ListView mListView;
-    ActionProcessButton weather;
-    String weather_Id = null;
+    private ActionProcessButton weather;
+    private String weather_Id = null;
+    private String[] provenceList;
+    private String[] cityList;
+    private String[] areaList;
+    private ListView provenceListView;
+    private String[] cityListView;
+    private String[] areaListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,10 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
         setContentView(R.layout.weather);
         selfDefinedSetActivityName("天气");
         selfDefinedSetWindowColor("#1c80f0");
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads()
+                .detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects()
+                .detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
         weather = (ActionProcessButton) findViewById(R.id.weather);    //ActionProcessButton
         weather.setOnClickListener(this);
         Button backButton = (Button) findViewById(R.id.backButton);
@@ -54,18 +64,14 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
                 finish();
             }
         });
-        textView = (TextView) findViewById(R.id.textView);
         provence = (EditText) findViewById(R.id.provence);
         city = (EditText) findViewById(R.id.city);
         area = (EditText) findViewById(R.id.area);
         mListView = (ListView) findViewById(R.id.ListView);
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads()
-                .detectDiskWrites().detectNetwork().penaltyLog().build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects()
-                .detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
         provence.setText("山东");
         city.setText("济南");
         area.setText("长清");
+
     }
 
     @Override
@@ -78,13 +84,9 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
                     @Override
                     public void run() {
                         try {
-                            if (provence.getText().equals("北京") || provence.getText().equals("天津") || provence.getText().equals("上海")) {
-                                weather_Id = getCityId(provence.getText().toString(), "", "", "省");
-                            } else {
-                                String provenceId = getCityId(provence.getText().toString(), "", "", "省");
-                                String cityId = getCityId(city.getText().toString(), "/" + provenceId, "", "市");
-                                weather_Id = getCityId(area.getText().toString(), "/" + provenceId, "/" + cityId, "区");
-                            }
+                            String provenceId = getCityId(getWeatherGson("", ""), provence.getText().toString(), "省");
+                            String cityId = getCityId(getWeatherGson("/" + provenceId, ""), city.getText().toString(), "市");
+                            weather_Id = getCityId(getWeatherGson("/" + provenceId, "/" + cityId), area.getText().toString(), "区");
                             getWeatherReturn(weather_Id);
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -101,17 +103,36 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
         }
     }
 
-    /* 从"guolin.tech/api/china"获取地区Id */
-    /* private String getWeatherId(String 地区名, String 省Id, String 市Id, String 省/市/区) */
-    private String getCityId(String resionName, String provenceId, String cityId, String resionKind) {
-        String weatherId = null;
+
+    //String 省Id, String 市Id
+    private String getWeatherGson(String provenceId, String cityId) {
+        String weatherGson = "";
         try {
-            OkHttpClient weatherClient = new OkHttpClient();
+            OkHttpClient weatherClient = new OkHttpClient.Builder()
+                    .connectTimeout(5000, TimeUnit.SECONDS)//设置连接超时时间
+                    .build();
             Request request = new Request.Builder()
                     .url("http://guolin.tech/api/china" + provenceId + cityId)
                     .build();
-            Response response = weatherClient.newCall(request).execute();
-            String weatherGson = response.body().string();
+            Call call = weatherClient.newCall(request);
+            Response response=call.execute();
+            weatherGson = response.body().string();
+        } catch (Exception e) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    weather.setProgress(0);
+                }
+            });
+        }
+        return weatherGson;
+    }
+
+    /* 从"guolin.tech/api/china"获取地区Id */
+    /* private String getWeatherId(String 地区名, String 省/市/区) */
+    private String getCityId(String weatherGson, String resionName, String resionKind) {
+        String weatherId = null;
+        try {
             Gson provence = new Gson();
             if (resionKind.equals("省") || resionKind.equals("市")) {
                 List<CityId> weatherData = provence.fromJson(weatherGson, new TypeToken<List<CityId>>() {
@@ -129,14 +150,13 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
                     if (weatherIdData.get(i).getName().equals(resionName)) {
                         weatherId = String.valueOf(weatherIdData.get(i).getWeather_id());
                         return weatherId;
-
                     }
                 }
             }
         } catch (Exception e) {
             Toast.makeText(this, "未查询到-" + resionKind, Toast.LENGTH_SHORT).show();
         }
-        return "error";
+        return weatherId;
     }
 
     /*获取天气json数据*/
@@ -180,20 +200,20 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
                 weatherReturn[1] = weatherReturnData.getHeWeather().get(0).getSuggestion().getDrsg().getTxt();
                 weatherReturn[2] = "空气质量：" + weatherReturnData.getHeWeather().get(0).getSuggestion().getAir().getBrf() + "，"
                         + weatherReturnData.getHeWeather().get(0).getSuggestion().getAir().getTxt();
-                weatherReturn[3]="出行建议："
+                weatherReturn[3] = "出行建议："
                         + weatherReturnData.getHeWeather().get(0).getSuggestion().getSport().getBrf() + "，"
-                        + weatherReturnData.getHeWeather().get(0).getSuggestion().getSport().getTxt() ;
-                weatherReturn[4]="未来天气：";
+                        + weatherReturnData.getHeWeather().get(0).getSuggestion().getSport().getTxt();
+                weatherReturn[4] = "未来天气：";
                 for (int i = 5; i < 7; i++) {
-                    if(i==5){
-                        weatherReturn[i]="明天    ";
-                    }else if(i==6){
-                        weatherReturn[i]="后天    ";
+                    if (i == 5) {
+                        weatherReturn[i] = "明天    ";
+                    } else if (i == 6) {
+                        weatherReturn[i] = "后天    ";
                     }
-                    weatherReturn[i] += weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i-4).getDate() + "\n"
-                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i-4).getCond().getTxt_d() + "\n" + "最高温度："
-                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i-4).getTmp().getMax() + "度" + "   " + "最低温度："
-                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i-4).getTmp().getMin() + "度";
+                    weatherReturn[i] += weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i - 4).getDate() + "\n"
+                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i - 4).getCond().getTxt_d() + "\n" + "最高温度："
+                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i - 4).getTmp().getMax() + "度" + "   " + "最低温度："
+                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i - 4).getTmp().getMin() + "度";
                 }
                 setItems(weatherReturn, 7);
             } catch (Exception e) {
