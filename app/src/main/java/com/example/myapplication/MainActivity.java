@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         qrcode_banner.setOnClickListener(this);
         Button weather_banner=(Button)findViewById(R.id.weather_banner);
         weather_banner.setOnClickListener(this);
+        Button map_banner=(Button)findViewById(R.id.map_banner);
+        map_banner.setOnClickListener(this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -69,9 +71,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Intent weather = new Intent(MainActivity.this, Weather.class);
                         startActivity(weather);
                         break;
-                    case "Null":
-                        Intent Null = new Intent(MainActivity.this, CourseTable.class);
-                        startActivity(Null);
+                    case "地图":
+                        Intent map = new Intent(MainActivity.this, Map.class);
+                        startActivity(map);
                         break;
                 }
             }
@@ -100,6 +102,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.weather_banner:
                 Intent weather_banner=new Intent(MainActivity.this,Weather.class);
                 startActivity(weather_banner);
+                break;
+            case R.id.map_banner:
+                Intent map_banner=new Intent(MainActivity.this,Map.class);
+                startActivity(map_banner);
+                break;
         }
     }
 
@@ -113,8 +120,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fruitList.add(qrcode);
         Fruit werther = new Fruit("天气", R.drawable.weather);
         fruitList.add(werther);
-        Fruit Null = new Fruit("Null", R.drawable.add);
-        fruitList.add(Null);
+        Fruit map = new Fruit("地图", R.drawable.map);
+        fruitList.add(map);
     }
 
     //监听返回键

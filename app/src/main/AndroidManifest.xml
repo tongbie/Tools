@@ -77,6 +77,11 @@
             android:theme="@style/NoActionBar" />
         <!--课程表-->
         <activity android:name=".CourseTable"></activity>
+        <!--百度地图-->
+        <activity android:name=".Map"
+            android:label="地图"
+            android:theme="@style/NoActionBar">
+        </activity>
         <!--百度服务-->
         <service android:name="com.baidu.location.f"
             android:enabled="true"

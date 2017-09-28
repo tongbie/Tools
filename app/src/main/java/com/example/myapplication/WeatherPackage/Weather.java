@@ -38,12 +38,6 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
     private ListView mListView;
     private ActionProcessButton weather;
     private String weather_Id = null;
-    private String[] provenceList;
-    private String[] cityList;
-    private String[] areaList;
-    private ListView provenceListView;
-    private String[] cityListView;
-    private String[] areaListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +65,6 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
         provence.setText("山东");
         city.setText("济南");
         area.setText("长清");
-
     }
 
     @Override
@@ -103,7 +96,7 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
         }
     }
 
-
+    /*获取地区json*/
     //String 省Id, String 市Id
     private String getWeatherGson(String provenceId, String cityId) {
         String weatherGson = "";
@@ -134,9 +127,9 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
         String weatherId = null;
         try {
             Gson provence = new Gson();
+            List<Weather_Id> weatherData = provence.fromJson(weatherGson, new TypeToken<List<Weather_Id>>() {
+            }.getType());
             if (resionKind.equals("省") || resionKind.equals("市")) {
-                List<CityId> weatherData = provence.fromJson(weatherGson, new TypeToken<List<CityId>>() {
-                }.getType());
                 for (int i = 0; i < weatherData.size(); i++) {
                     if (weatherData.get(i).getName().equals(resionName)) {
                         weatherId = String.valueOf(weatherData.get(i).getId());
@@ -144,11 +137,9 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
                     }
                 }
             } else if (resionKind.equals("区")) {
-                List<Weather_Id> weatherIdData = provence.fromJson(weatherGson, new TypeToken<List<Weather_Id>>() {
-                }.getType());
-                for (int i = 0; i < weatherIdData.size(); i++) {
-                    if (weatherIdData.get(i).getName().equals(resionName)) {
-                        weatherId = String.valueOf(weatherIdData.get(i).getWeather_id());
+                for (int i = 0; i < weatherData.size(); i++) {
+                    if (weatherData.get(i).getName().equals(resionName)) {
+                        weatherId = String.valueOf(weatherData.get(i).getWeather_id());
                         return weatherId;
                     }
                 }
@@ -156,7 +147,7 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
         } catch (Exception e) {
             Toast.makeText(this, "未查询到-" + resionKind, Toast.LENGTH_SHORT).show();
         }
-        return weatherId;
+        return "error";
     }
 
     /*获取天气json数据*/
@@ -252,9 +243,9 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
             String text = buffer.toString();
 
             Gson gson = new Gson();
-            List<CityId> weatherIDs = gson.fromJson(text, new TypeToken<List<CityId>>() {
+            List<Weather_Id> weatherIDs = gson.fromJson(text, new TypeToken<List<Weather_Id>>() {
             }.getType());
-            for (CityId cityId : weatherIDs) {
+            for (Weather_Id cityId : weatherIDs) {
                 catchname = cityId.getName();
                 if (catchname.equals(name)) {
                     id = cityId.getWeather_id();
