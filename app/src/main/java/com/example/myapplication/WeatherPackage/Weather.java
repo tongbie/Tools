@@ -127,7 +127,7 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
         String weatherId = null;
         try {
             Gson provence = new Gson();
-            List<Weather_Id> weatherData = provence.fromJson(weatherGson, new TypeToken<List<Weather_Id>>() {
+            List<Weather_Id_Gson> weatherData = provence.fromJson(weatherGson, new TypeToken<List<Weather_Id_Gson>>() {
             }.getType());
             if (resionKind.equals("省") || resionKind.equals("市")) {
                 for (int i = 0; i < weatherData.size(); i++) {
@@ -160,7 +160,7 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
             Response response = weatherReturnClient.newCall(request).execute();
             String weatherReturnGson = response.body().string();
             Gson weatherReturn = new Gson();
-            WeatherReturn weatherReturnData = weatherReturn.fromJson(weatherReturnGson, WeatherReturn.class);
+            WeatherReturn_Gson weatherReturnData = weatherReturn.fromJson(weatherReturnGson, WeatherReturn_Gson.class);
             ValueRunnable valueRunnable = new ValueRunnable();
             valueRunnable.setWeatherReturn(weatherReturnData);
             Thread thread = new Thread(valueRunnable);
@@ -173,9 +173,9 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
 
     /* 用以实现向Runnable中传值 */
     private class ValueRunnable implements Runnable {
-        private WeatherReturn weatherReturnData;
+        private WeatherReturn_Gson weatherReturnData;
 
-        public void setWeatherReturn(WeatherReturn weatherReturnData) {
+        public void setWeatherReturn(WeatherReturn_Gson weatherReturnData) {
             this.weatherReturnData = weatherReturnData;
         }
 
@@ -243,9 +243,9 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
             String text = buffer.toString();
 
             Gson gson = new Gson();
-            List<Weather_Id> weatherIDs = gson.fromJson(text, new TypeToken<List<Weather_Id>>() {
+            List<Weather_Id_Gson> weatherIDs = gson.fromJson(text, new TypeToken<List<Weather_Id_Gson>>() {
             }.getType());
-            for (Weather_Id cityId : weatherIDs) {
+            for (Weather_Id_Gson cityId : weatherIDs) {
                 catchname = cityId.getName();
                 if (catchname.equals(name)) {
                     id = cityId.getWeather_id();

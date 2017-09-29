@@ -6,7 +6,7 @@ import java.util.List;
  * Created by aaa on 2017/9/17.
  */
 
-public class WeatherReturn {
+public class WeatherReturn_Gson {
 
     private List<HeWeatherBean> HeWeather;
 

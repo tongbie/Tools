@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.myapplication.CourseTablePackage.CourseTable;
 import com.example.myapplication.UI.Fruit;
 import com.example.myapplication.UI.FruitAdapter;
 import com.example.myapplication.WeatherPackage.Weather;
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         weather_banner.setOnClickListener(this);
         Button map_banner=(Button)findViewById(R.id.map_banner);
         map_banner.setOnClickListener(this);
+        Button new_button=(Button)findViewById(R.id.new_button);
+        new_button.setOnClickListener(this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -106,6 +109,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.map_banner:
                 Intent map_banner=new Intent(MainActivity.this,Map.class);
                 startActivity(map_banner);
+                break;
+            case R.id.new_button:
+                Intent newActivity=new Intent(MainActivity.this,CourseTable.class);
+                startActivity(newActivity);
                 break;
         }
     }

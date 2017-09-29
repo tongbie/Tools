@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="weekItemHeight">40dp</dimen>
+    <dimen name="weekItemMarTop">2dp</dimen>
+    <dimen name="weekItemMarLeft">2dp</dimen>
+</resources>
+<!--课表尺寸文件-->

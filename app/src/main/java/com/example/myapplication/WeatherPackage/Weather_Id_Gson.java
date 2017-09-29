@@ -4,7 +4,7 @@ package com.example.myapplication.WeatherPackage;
  * Created by aaa on 2017/9/19.
  */
 
-public class Weather_Id {
+public class Weather_Id_Gson {
     /**
      * id : 799
      * name : 济南

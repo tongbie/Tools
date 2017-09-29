@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--顶部标题栏-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="#00bbca">
+    android:layout_marginTop="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginLeft="6dp"
+    android:background="@drawable/titlelayout_bead">
 
     <Button
         android:id="@+id/title_list"

@@ -42,7 +42,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
         <!-- 主活动 -->
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"/>
         <!-- 计算器 -->
         <activity
             android:name=".Counter"
@@ -76,7 +76,9 @@
             android:name=".WeatherPackage.Weather"
             android:theme="@style/NoActionBar" />
         <!--课程表-->
-        <activity android:name=".CourseTable"></activity>
+        <activity android:name=".CourseTablePackage.CourseTable"
+            android:theme="@style/NoActionBar">
+        </activity>
         <!--百度地图-->
         <activity android:name=".Map"
             android:label="地图"
