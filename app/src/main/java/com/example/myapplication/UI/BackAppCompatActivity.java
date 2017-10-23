@@ -25,6 +25,11 @@ public class BackAppCompatActivity extends AppCompatActivity {
         backLinearLayout.setBackgroundColor(Color.parseColor(windowColor));
     }
 
+    public void selfDefinedSetTitleBackground(int titleColor){
+        LinearLayout backLinearLayout = (LinearLayout) findViewById(R.id.backLinearLayout);
+        backLinearLayout.setBackground(this.getDrawable(titleColor));
+    }
+
     //设置Activity顶部TextView显示名称
     public void selfDefinedSetActivityName(String activityName) {
         TextView backTextView = (TextView) findViewById(R.id.backTextView);

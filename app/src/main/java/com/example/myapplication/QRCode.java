@@ -46,7 +46,8 @@ public class QRCode extends BackAppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qrcode);
         selfDefinedSetActivityName("二维码");
-        selfDefinedSetWindowColor("#01a6de");
+        selfDefinedSetWindowColor("#fafafa");
+        selfDefinedSetTitleBackground(R.drawable.qrcode_bead);
         ZXingLibrary.initDisplayOpinion(this);    //zxing包初始操作
         edit = (EditText) findViewById(R.id.edit);
         image = (ImageView) findViewById(R.id.image);

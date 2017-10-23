@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.myapplication.Map"
-    android:orientation="vertical"
-    android:background="#e26d63">
+    android:orientation="vertical">
     <include layout="@layout/backtitlelayout" />
 
     <Button
@@ -18,9 +17,14 @@
 
     <TextView
         android:id="@+id/position_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
         android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@drawable/map_bead"
+        android:layout_marginTop="6dp"
         android:textColor="#ffffff"/>
 
     <com.baidu.mapapi.map.MapView

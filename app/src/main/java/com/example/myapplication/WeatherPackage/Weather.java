@@ -44,7 +44,8 @@ public class Weather extends BackAppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weather);
         selfDefinedSetActivityName("天气");
-        selfDefinedSetWindowColor("#1c80f0");
+        selfDefinedSetWindowColor("#fafafa");
+        selfDefinedSetTitleBackground(R.drawable.weather_bead);
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads()
                 .detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects()

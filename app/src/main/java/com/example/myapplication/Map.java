@@ -45,7 +45,8 @@ public class Map extends BackAppCompatActivity {
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.map);
         selfDefinedSetActivityName("地图");
-        selfDefinedSetWindowColor("#e26d63");
+        selfDefinedSetWindowColor("#fafafa");
+        selfDefinedSetTitleBackground(R.drawable.map_bead);
         mapView=(MapView)findViewById(R.id.bmapView) ;
         baiduMap=mapView.getMap();
         baiduMap.setMyLocationEnabled(true);

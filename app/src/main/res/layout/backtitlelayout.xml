@@ -2,7 +2,10 @@
 <!--顶部带返回键标题栏-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="60dp"
-    android:id="@+id/backLinearLayout">
+    android:id="@+id/backLinearLayout"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginTop="6dp">
     <Button
         android:id="@+id/backButton"
         android:layout_width="36dp"

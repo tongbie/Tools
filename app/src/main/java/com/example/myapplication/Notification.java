@@ -51,7 +51,8 @@ public class Notification extends BackAppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notification);
         selfDefinedSetActivityName("通知");
-        selfDefinedSetWindowColor("#00c8a4");
+        selfDefinedSetWindowColor("#fafafa");
+        selfDefinedSetTitleBackground(R.drawable.notification_bead);
         picture = (ImageView) findViewById(R.id.picture);
         LinearLayout NotificationLinearLayout = (LinearLayout) findViewById(R.id.NotificationLinearLayout);
         ViewGroup.LayoutParams layoutParams = NotificationLinearLayout.getLayoutParams();

@@ -14,205 +14,202 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <com.example.myapplication.UI.BannerLayout
+                android:id="@+id/bannerlayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="120dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="6dp">
 
-                <com.example.myapplication.UI.BannerLayout
-                    android:id="@+id/bannerlayout"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"
-                    android:layout_marginTop="6dp"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="120dp">
+                    android:layout_height="match_parent"
+                    android:background="@drawable/notification_bead">
+
+                    <Button
+                        android:id="@+id/notification_banner"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/nofication_cheek" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/notification_bead">
+                        android:orientation="vertical">
 
-                        <Button
-                            android:id="@+id/notification_banner"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="30dp"
-                            android:background="@drawable/nofication_cheek" />
-
-                        <LinearLayout
+                        <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="18dp"
-                                android:layout_weight="1"
-                                android:text="Notification"
-                                android:textColor="#ffffff"
-                                android:textSize="28dp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="20dp"
-                                android:layout_weight="2"
-                                android:maxLines="2"
-                                android:text="You can use it to send notification."
-                                android:textColor="#ffffff"
-                                android:textSize="18dp" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/qrcode_bead">
-
-                        <Button
-                            android:id="@+id/qrcode_banner"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
+                            android:layout_height="0dp"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="30dp"
-                            android:background="@drawable/qrcode_cheek" />
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_weight="1"
+                            android:text="Notification"
+                            android:textColor="#ffffff"
+                            android:textSize="28dp" />
 
-                        <LinearLayout
+                        <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="18dp"
-                                android:layout_weight="1"
-                                android:text="QRCode"
-                                android:textColor="#ffffff"
-                                android:textSize="28dp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="20dp"
-                                android:layout_weight="2"
-                                android:maxLines="2"
-                                android:text="This fuction is used to sweep the QR Code."
-                                android:textColor="#ffffff"
-                                android:textSize="18dp" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/weather_bead">
-
-                        <Button
-                            android:id="@+id/weather_banner"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
+                            android:layout_height="0dp"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="30dp"
-                            android:background="@drawable/weather_cheek" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="18dp"
-                                android:layout_weight="1"
-                                android:text="Weather"
-                                android:textColor="#ffffff"
-                                android:textSize="28dp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="20dp"
-                                android:layout_weight="2"
-                                android:maxLines="2"
-                                android:text="The weather information will be show there."
-                                android:textColor="#ffffff"
-                                android:textSize="18dp" />
-                        </LinearLayout>
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="2"
+                            android:maxLines="2"
+                            android:text="You can use it to send notification."
+                            android:textColor="#ffffff"
+                            android:textSize="18dp" />
                     </LinearLayout>
+                </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/map_bead">
-
-                        <Button
-                            android:id="@+id/map_banner"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="30dp"
-                            android:background="@drawable/map_cheek" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="18dp"
-                                android:layout_weight="1"
-                                android:text="Map"
-                                android:textColor="#ffffff"
-                                android:textSize="28dp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="20dp"
-                                android:layout_weight="2"
-                                android:maxLines="2"
-                                android:text="You can know your position you staying now."
-                                android:textColor="#ffffff"
-                                android:textSize="18dp" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </com.example.myapplication.UI.BannerLayout>
-                <Button
-                    android:id="@+id/new_button"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/notification_bead"
-                    android:text="new"
-                    android:textAllCaps="false"
-                    android:textColor="#ffffff"
-                    android:textSize="20dp"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"/>
-            </LinearLayout>
-        </FrameLayout>
+                    android:layout_height="match_parent"
+                    android:background="@drawable/qrcode_bead">
+
+                    <Button
+                        android:id="@+id/qrcode_banner"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/qrcode_cheek" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_weight="1"
+                            android:text="QRCode"
+                            android:textColor="#ffffff"
+                            android:textSize="28dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="2"
+                            android:maxLines="2"
+                            android:text="This fuction is used to sweep the QR Code."
+                            android:textColor="#ffffff"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/weather_bead">
+
+                    <Button
+                        android:id="@+id/weather_banner"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/weather_cheek" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_weight="1"
+                            android:text="Weather"
+                            android:textColor="#ffffff"
+                            android:textSize="28dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="2"
+                            android:maxLines="2"
+                            android:text="The weather information will be show there."
+                            android:textColor="#ffffff"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/map_bead">
+
+                    <Button
+                        android:id="@+id/map_banner"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/map_cheek" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="18dp"
+                            android:layout_weight="1"
+                            android:text="Map"
+                            android:textColor="#ffffff"
+                            android:textSize="28dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="2"
+                            android:maxLines="2"
+                            android:text="You can know your position you staying now."
+                            android:textColor="#ffffff"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.example.myapplication.UI.BannerLayout>
+
+            <Button
+                android:id="@+id/new_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/null_bead"
+                android:text="new"
+                android:textAllCaps="false"
+                android:textColor="#ffffff"
+                android:textSize="20dp" />
+        </LinearLayout>
+
 
         <ListView
             android:id="@+id/listView"

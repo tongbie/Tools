@@ -12,8 +12,7 @@ public class Course implements Serializable {
     private String coursePlace;//课程地点
     private String courseTeacher;//课程教师
 
-    public Course(String courseName, String courseWeek,
-                      String coursePlace, String courseTeacher) {
+    public Course(String courseName, String courseWeek,String coursePlace, String courseTeacher) {
         super();
         this.courseName = courseName;
         this.courseWeek = courseWeek;
