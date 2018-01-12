@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.myapplication.UI.SlideBackLayout;
+
 public class Counter extends Activity implements View.OnClickListener {
     Handler uiHandler = new Handler();
     Button b0;
@@ -61,6 +63,12 @@ public class Counter extends Activity implements View.OnClickListener {
         point = (Button) findViewById(R.id.point);
         change = (Button) findViewById(R.id.change);
         input = (EditText) findViewById(R.id.input);
+
+        /* 设置右滑退出 */
+        SlideBackLayout slideBackLayout;
+        slideBackLayout = new SlideBackLayout(this);
+        slideBackLayout.bind();
+        /* 设置右滑退出 */
 
         b0.setOnClickListener(this);
         b1.setOnClickListener(this);

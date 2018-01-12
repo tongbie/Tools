@@ -5,9 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context="com.example.myapplication.CourseTablePackage.CourseTable">
 
-    <include layout="@layout/backtitlelayout" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#303f9f">
+        <include layout="@layout/backtitlelayout" />
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/weekName"
         android:layout_width="match_parent"

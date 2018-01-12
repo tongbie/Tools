@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.myapplication.UI.BackAppCompatActivity;
+import com.example.myapplication.UI.SlideBackLayout;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
@@ -41,10 +42,16 @@ public class QRCode extends BackAppCompatActivity implements View.OnClickListene
     EditText edit;
     ImageView image = null;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qrcode);
+        /* 设置右滑退出 */
+        SlideBackLayout slideBackLayout;
+        slideBackLayout = new SlideBackLayout(this);
+        slideBackLayout.bind();
+        /* 设置右滑退出 */
         selfDefinedSetActivityName("二维码");
         selfDefinedSetWindowColor("#fafafa");
         selfDefinedSetTitleBackground(R.drawable.qrcode_bead);

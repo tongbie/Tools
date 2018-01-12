@@ -22,6 +22,7 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.example.myapplication.UI.BackAppCompatActivity;
+import com.example.myapplication.UI.SlideBackLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,11 @@ public class Map extends BackAppCompatActivity {
         super.onCreate(savedInstanceState);
         mLocationClient=new LocationClient(getApplicationContext());
         mLocationClient.registerLocationListener(new MyLocationListener());
+        /* 设置右滑退出 */
+        SlideBackLayout slideBackLayout;
+        slideBackLayout = new SlideBackLayout(this);
+        slideBackLayout.bind();
+        /* 设置右滑退出 */
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.map);
         selfDefinedSetActivityName("地图");

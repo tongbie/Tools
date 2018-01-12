@@ -35,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.myapplication.UI.BackAppCompatActivity;
+import com.example.myapplication.UI.SlideBackLayout;
 
 import static com.example.myapplication.R.id.send;
 
@@ -53,6 +54,11 @@ public class Notification extends BackAppCompatActivity implements View.OnClickL
         selfDefinedSetActivityName("通知");
         selfDefinedSetWindowColor("#fafafa");
         selfDefinedSetTitleBackground(R.drawable.notification_bead);
+        /* 设置右滑退出 */
+        SlideBackLayout slideBackLayout;
+        slideBackLayout = new SlideBackLayout(this);
+        slideBackLayout.bind();
+        /* 设置右滑退出 */
         picture = (ImageView) findViewById(R.id.picture);
         LinearLayout NotificationLinearLayout = (LinearLayout) findViewById(R.id.NotificationLinearLayout);
         ViewGroup.LayoutParams layoutParams = NotificationLinearLayout.getLayoutParams();

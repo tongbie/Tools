@@ -8,6 +8,8 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.myapplication.UI.SlideBackLayout;
+
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -23,6 +25,11 @@ public class NetworkTest extends AppCompatActivity implements View.OnClickListen
         TextView textView=(TextView)findViewById(R.id.textView) ;
         Button network=(Button)findViewById(R.id.network);
         network.setOnClickListener(this);
+        /* 设置右滑退出 */
+        SlideBackLayout slideBackLayout;
+        slideBackLayout = new SlideBackLayout(this);
+        slideBackLayout.bind();
+        /* 设置右滑退出 */
     }
 
     @Override
