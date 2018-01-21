@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.example.myapplication.CourseTablePackage.CourseTable;
 import com.example.myapplication.UI.Fruit;
 import com.example.myapplication.UI.FruitAdapter;
-import com.example.myapplication.WeatherPackage.Weather;
+import com.example.myapplication.Weather.WeatherActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mainactivity);
+        setContentView(R.layout.activity_main);
         ActionBar actionBar = getSupportActionBar();    //隐藏标题栏
         if (actionBar != null) {
             actionBar.hide();
@@ -59,23 +59,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Fruit fruit = fruitList.get(position);    //通过position选项获取用户点击的是哪一个子项
                 switch (fruit.getName().toString()) {
                     case "计算器":
-                        Intent counter = new Intent(MainActivity.this, Counter.class);
+                        Intent counter = new Intent(MainActivity.this, CounterActivity.class);
                         startActivity(counter);
                         break;
                     case "通知":
-                        Intent notification = new Intent(MainActivity.this, Notification.class);
+                        Intent notification = new Intent(MainActivity.this, NotificationActivity.class);
                         startActivity(notification);
                         break;
                     case "二维码":
-                        Intent qrcode = new Intent(MainActivity.this, QRCode.class);
+                        Intent qrcode = new Intent(MainActivity.this, QRCodeActivity.class);
                         startActivity(qrcode);
                         break;
                     case "天气":
-                        Intent weather = new Intent(MainActivity.this, Weather.class);
+                        Intent weather = new Intent(MainActivity.this, WeatherActivity.class);
                         startActivity(weather);
                         break;
                     case "地图":
-                        Intent map = new Intent(MainActivity.this, Map.class);
+                        Intent map = new Intent(MainActivity.this, MapActivity.class);
                         startActivity(map);
                         break;
                 }
@@ -95,19 +95,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.notification_banner:
-                Intent notification_banner=new Intent(MainActivity.this,Notification.class);
+                Intent notification_banner=new Intent(MainActivity.this,NotificationActivity.class);
                 startActivity(notification_banner);
                 break;
             case R.id.qrcode_banner:
-                Intent qrcode_banner=new Intent(MainActivity.this,QRCode.class);
+                Intent qrcode_banner=new Intent(MainActivity.this,QRCodeActivity.class);
                 startActivity(qrcode_banner);
                 break;
             case R.id.weather_banner:
-                Intent weather_banner=new Intent(MainActivity.this,Weather.class);
+                Intent weather_banner=new Intent(MainActivity.this,WeatherActivity.class);
                 startActivity(weather_banner);
                 break;
             case R.id.map_banner:
-                Intent map_banner=new Intent(MainActivity.this,Map.class);
+                Intent map_banner=new Intent(MainActivity.this,MapActivity.class);
                 startActivity(map_banner);
                 break;
             case R.id.new_button:

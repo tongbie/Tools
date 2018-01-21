@@ -17,29 +17,12 @@ import android.widget.Scroller;
 
 /* 首页滚动横幅效果 */
 public class BannerLayout extends ViewGroup {
-
     private Scroller scroller;
     private float mLastMotionX;
     private int currentScreenIndex = 0;
-
     private boolean autoScroll = true;
-
     private int scrollTime = 3 * 1000;
-
     private int currentWhat = 0;
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (autoScroll && currentWhat == msg.what) {
-                currentScreenIndex = (currentScreenIndex + 1) % getChildCount();
-                scrollToScreen(currentScreenIndex);
-                Log.i("TAG", "handleMessage scrollToScreen:" + currentScreenIndex);
-                if (autoScroll)
-                    handler.sendEmptyMessageDelayed(currentWhat, scrollTime);
-            }
-        }
-    };
 
     public BannerLayout(Context context) {
         super(context);
@@ -56,6 +39,17 @@ public class BannerLayout extends ViewGroup {
         initView(context);
     }
 
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (autoScroll && currentWhat == msg.what) {
+                currentScreenIndex = (currentScreenIndex + 1) % getChildCount();
+                scrollToScreen(currentScreenIndex);
+                handler.sendEmptyMessageDelayed(currentWhat, scrollTime);
+            }
+        }
+    };
+
     private void initView(final Context context) {
         this.scroller = new Scroller(context, new DecelerateInterpolator(2));//OvershootInterpolator(1.1f)
         handler.sendEmptyMessageDelayed(currentWhat, scrollTime);
@@ -63,15 +57,11 @@ public class BannerLayout extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int maxHeight = -1;
         final int count = getChildCount();
         for (int i = 0; i < count; i++) {
             getChildAt(i).measure(widthMeasureSpec, heightMeasureSpec);
-            maxHeight = Math.max(maxHeight, getChildAt(i).getMeasuredHeight());
         }
-        maxHeight = Math.min(maxHeight, MeasureSpec.getSize(heightMeasureSpec));
-        Log.e("TAG", "onMeasure Height:" + maxHeight);
-        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), maxHeight);
+        super.onMeasure(widthMeasureSpec,heightMeasureSpec);
     }
 
     @Override
@@ -104,11 +94,8 @@ public class BannerLayout extends ViewGroup {
         final float x = ev.getX();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-
                 autoScroll = false;
-
                 currentWhat++;
-
                 mLastMotionX = x;
                 if (!scroller.isFinished()) {
                     scroller.abortAnimation();
@@ -142,16 +129,10 @@ public class BannerLayout extends ViewGroup {
     }
 
     private void scrollToScreen(int whichScreen) {
-//        if (!scroller.isFinished())
-//            return;
-//        Log.e("TAG","scrollToScreen:"+whichScreen);
         int delta = 0;
         delta = whichScreen * getWidth() - getScrollX();
-
-//        scroller.startScroll(getScrollX(), 0, delta, 0, Math.abs(delta) * 2);
         scroller.startScroll(getScrollX(), 0, delta, 0, 1500);
         invalidate();
-
         currentScreenIndex = whichScreen;
     }
 
@@ -160,11 +141,4 @@ public class BannerLayout extends ViewGroup {
         final int screenWidth = getWidth();
         scrollToScreen((x + (screenWidth / 2)) / screenWidth);
     }
-
-    @Override
-    protected void finalize() throws Throwable {
-        Log.e("TAG", "finalize===");
-        super.finalize();
-    }
-
 }

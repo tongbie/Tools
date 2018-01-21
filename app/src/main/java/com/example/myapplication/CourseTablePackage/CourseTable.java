@@ -2,16 +2,17 @@ package com.example.myapplication.CourseTablePackage;
 
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.UI.BackAppCompatActivity;
+import com.example.myapplication.UI.BackActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseTable extends BackAppCompatActivity {
+public class CourseTable extends BackActivity {
     LinearLayout weekPanels[] = new LinearLayout[7];
     List courseData[] = new ArrayList[7];
     int itemHeight;
@@ -20,9 +21,9 @@ public class CourseTable extends BackAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.coursetable);
-        selfDefinedSetWindowColor("#303f9f");
-        selfDefinedSetActivityName("课程表");
+        setContentView(R.layout.activity_coursetable);
+        setWindowColor("#303f9f");
+        setTitleName("课程表");
         itemHeight = getResources().getDimensionPixelSize(R.dimen.weekItemHeight);
         marTop = getResources().getDimensionPixelSize(R.dimen.weekItemMarTop);
         marLeft = getResources().getDimensionPixelSize(R.dimen.weekItemMarLeft);
@@ -145,10 +146,15 @@ public class CourseTable extends BackAppCompatActivity {
             tv.setTextSize(12);
             tv.setTextColor(getResources().getColor(R.color.courseTextColor));
             tv.setText(c.getName() + "\n" + c.getRoom() + "\n" + c.getTeach());
-            tv.setBackground(getResources().getDrawable(R.drawable.qrcode_bead));    //这里设置课程背景图
+            tv.setBackground(getResources().getDrawable(R.drawable.qrcode_bg));    //这里设置课程背景图
             ll.addView(tv);
             pre = c;
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
 

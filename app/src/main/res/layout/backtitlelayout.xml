@@ -8,6 +8,7 @@
     android:layout_marginTop="6dp">
     <Button
         android:id="@+id/backButton"
+        android:onClick="onClick"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_gravity="center"

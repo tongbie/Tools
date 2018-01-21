@@ -42,7 +42,7 @@
         <activity android:name=".MainActivity"/>
         <!-- 计算器 -->
         <activity
-            android:name=".Counter"
+            android:name=".CounterActivity"
             android:theme="@style/Counter" />
         <!-- 返回键 -->
         <!-- 启动界面 -->
@@ -58,26 +58,25 @@
         </activity>
         <!-- 通知 -->
         <activity
-            android:name=".Notification"
+            android:name=".NotificationActivity"
             android:label="通知"
             android:theme="@style/NoActionBar" />
         <!-- 网络 -->
-        <activity android:name=".NetworkTest" />
         <!-- 二维码 -->
         <activity
-            android:name=".QRCode"
+            android:name=".QRCodeActivity"
             android:label="二维码"
-            android:theme="@style/NoActionBar" />
+            android:theme="@style/NoTitleTranslucentTheme" />
         <!-- 天气 -->
         <activity
-            android:name=".WeatherPackage.Weather"
+            android:name=".Weather.WeatherActivity"
             android:theme="@style/NoActionBar" />
         <!--课程表-->
         <activity android:name=".CourseTablePackage.CourseTable"
             android:theme="@style/NoActionBar">
         </activity>
         <!--百度地图-->
-        <activity android:name=".Map"
+        <activity android:name=".MapActivity"
             android:label="地图"
             android:theme="@style/NoActionBar">
         </activity>
