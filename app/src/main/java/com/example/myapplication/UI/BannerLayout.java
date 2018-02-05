@@ -128,7 +128,7 @@ public class BannerLayout extends ViewGroup {
         return false;
     }
 
-    private void scrollToScreen(int whichScreen) {
+    private void  scrollToScreen(int whichScreen) {
         int delta = 0;
         delta = whichScreen * getWidth() - getScrollX();
         scroller.startScroll(getScrollX(), 0, delta, 0, 1500);

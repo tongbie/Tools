@@ -41,31 +41,30 @@ public class MapActivity extends BackActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mLocationClient=new LocationClient(getApplicationContext());
+        mLocationClient=new LocationClient(this);
         mLocationClient.registerLocationListener(new MyLocationListener());
-        /* 设置右滑退出 */
-        SlipBackClass slideBackLayout;
-        slideBackLayout = new SlipBackClass(this);
-        slideBackLayout.bind();
-        /* 设置右滑退出 */
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_map);
         setTitleName("地图");
         setWindowColor("#fafafa");
         setTitleBackground(R.drawable.map_bg);
+        new SlipBackClass(this).bind();
+        initView();
+
+    }
+
+    private void initView(){
         mapView=(MapView)findViewById(R.id.bmapView) ;
         baiduMap=mapView.getMap();
         baiduMap.setMyLocationEnabled(true);
-        Button renovate=(Button)findViewById(R.id.renotive);
-        renovate.setOnClickListener(new View.OnClickListener() {
+        ((Button)findViewById(R.id.renotive)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 requestLocation();
             }
         });
         positionText=(TextView)findViewById(R.id.position_text_view);
-        Button backButton=(Button)findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        ((Button)findViewById(R.id.backButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -74,14 +73,11 @@ public class MapActivity extends BackActivity {
         List<String> permissionList=new ArrayList<>();
         if(ContextCompat.checkSelfPermission(MapActivity.this, ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
             permissionList.add(ACCESS_FINE_LOCATION);
-        }
-        if(ContextCompat.checkSelfPermission(MapActivity.this, READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED){
+        }else if(ContextCompat.checkSelfPermission(MapActivity.this, READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED){
             permissionList.add(READ_PHONE_STATE);
-        }
-        if(ContextCompat.checkSelfPermission(MapActivity.this, WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+        }else if(ContextCompat.checkSelfPermission(MapActivity.this, WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
             permissionList.add(WRITE_EXTERNAL_STORAGE);
-        }
-        if(!permissionList.isEmpty()){
+        }else if(!permissionList.isEmpty()){
             String[] permissions=permissionList.toArray(new String[permissionList.size()]);
             ActivityCompat.requestPermissions(MapActivity.this,permissions,1);
         }else{

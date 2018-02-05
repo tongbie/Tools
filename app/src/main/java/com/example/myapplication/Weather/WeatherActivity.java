@@ -15,6 +15,8 @@ import com.example.myapplication.R;
 import com.example.myapplication.UI.BackActivity;
 import com.example.myapplication.UI.GoogleCard;
 import com.example.myapplication.UI.GoogleCardAdapter;
+import com.example.myapplication.UI.MyListView;
+import com.example.myapplication.UI.SlipBackClass;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -50,22 +52,16 @@ public class WeatherActivity extends BackActivity implements View.OnClickListene
                 .detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects()
                 .detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
+        new SlipBackClass(this).bind();
         weather = (ActionProcessButton) findViewById(R.id.weather);    //ActionProcessButton
         weather.setOnClickListener(this);
-        Button backButton = (Button) findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
         provence = (EditText) findViewById(R.id.provence);
         city = (EditText) findViewById(R.id.city);
         area = (EditText) findViewById(R.id.area);
         mListView = (ListView) findViewById(R.id.ListView);
         provence.setText("山东");
-        city.setText("济南");
-        area.setText("长清");
+        city.setText("潍坊");
+        area.setText("高密");
     }
 
     @Override
@@ -109,7 +105,7 @@ public class WeatherActivity extends BackActivity implements View.OnClickListene
                     .url("http://guolin.tech/api/china" + provenceId + cityId)
                     .build();
             Call call = weatherClient.newCall(request);
-            Response response=call.execute();
+            Response response = call.execute();
             weatherGson = response.body().string();
         } catch (Exception e) {
             runOnUiThread(new Runnable() {
@@ -184,17 +180,22 @@ public class WeatherActivity extends BackActivity implements View.OnClickListene
         public void run() {
             try {
                 String[] weatherReturn = new String[7];
+                WeatherDataGson.HeWeatherBean.DailyForecastBean dailyForecast_0
+                        = weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(0);
                 weatherReturn[0] = weatherReturnData.getHeWeather().get(0).getBasic().getCity().toString() + "    "
-                        + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(0).getDate() + "\n天气："
-                        + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(0).getCond().getTxt_d() + "\n最高温度："
-                        + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(0).getTmp().getMax() + "度\n最低温度："
-                        + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(0).getTmp().getMin() + "度";
-                weatherReturn[1] = weatherReturnData.getHeWeather().get(0).getSuggestion().getDrsg().getTxt();
-                weatherReturn[2] = "空气质量：" + weatherReturnData.getHeWeather().get(0).getSuggestion().getAir().getBrf() + "，"
-                        + weatherReturnData.getHeWeather().get(0).getSuggestion().getAir().getTxt();
+                        + dailyForecast_0.getDate() + "\n天气："
+                        + dailyForecast_0.getCond().getTxt_d() + "\n最高温度："
+                        + dailyForecast_0.getTmp().getMax() + "度\n最低温度："
+                        + dailyForecast_0.getTmp().getMin() + "度";
+
+                WeatherDataGson.HeWeatherBean.SuggestionBean suggestion
+                        = weatherReturnData.getHeWeather().get(0).getSuggestion();
+                weatherReturn[1] = suggestion.getDrsg().getTxt();
+                weatherReturn[2] = "空气质量：" + suggestion.getAir().getBrf() + "，"
+                        + suggestion.getAir().getTxt();
                 weatherReturn[3] = "出行建议："
-                        + weatherReturnData.getHeWeather().get(0).getSuggestion().getSport().getBrf() + "，"
-                        + weatherReturnData.getHeWeather().get(0).getSuggestion().getSport().getTxt();
+                        + suggestion.getSport().getBrf() + "，"
+                        + suggestion.getSport().getTxt();
                 weatherReturn[4] = "未来天气：";
                 for (int i = 5; i < 7; i++) {
                     if (i == 5) {
@@ -202,10 +203,12 @@ public class WeatherActivity extends BackActivity implements View.OnClickListene
                     } else if (i == 6) {
                         weatherReturn[i] = "后天    ";
                     }
-                    weatherReturn[i] += weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i - 4).getDate() + "\n"
-                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i - 4).getCond().getTxt_d() + "\n" + "最高温度："
-                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i - 4).getTmp().getMax() + "度" + "   " + "最低温度："
-                            + weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i - 4).getTmp().getMin() + "度";
+                    WeatherDataGson.HeWeatherBean.DailyForecastBean dailyForecast_i
+                            =weatherReturnData.getHeWeather().get(0).getDaily_forecast().get(i - 4);
+                    weatherReturn[i] += dailyForecast_i.getDate() + "\n"
+                            + dailyForecast_i.getCond().getTxt_d() + "\n" + "最高温度："
+                            + dailyForecast_i.getTmp().getMax() + "度" + "   " + "最低温度："
+                            + dailyForecast_i.getTmp().getMin() + "度";
                 }
                 setItems(weatherReturn, 7);
             } catch (Exception e) {
@@ -253,22 +256,8 @@ public class WeatherActivity extends BackActivity implements View.OnClickListene
                     return id;
                 }
             }
-            /*try {
-                JSONArray jsonArray = new JSONArray(text);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String data = jsonObject.getString(findname);    //""内填写你要读取的数据
-                    if (data.equals(name)) {
-                        id = jsonObject.getString(returnfor);
-                        break;
-                    }
-                }
-            } catch (Exception e) {
-                Log.d("handleCitiesResponse", e.toString());
-            }*/
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            Log.d("readFromAssets", e.toString());
+            e.printStackTrace();
         }
         Toast.makeText(this, "未找到该城市", Toast.LENGTH_SHORT).show();
         return "CN101120102";

@@ -39,14 +39,19 @@ import java.io.IOException;
 
 public class QRCodeActivity extends BackActivity {
     private boolean judgelogo = false;    //判断是否带logo
-    EditText edit;
-    ImageView image = null;
+    private EditText edit;
+    private ImageView image = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode);
+        if (ContextCompat.checkSelfPermission(QRCodeActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(QRCodeActivity.this, new String[]{android.Manifest.permission.CAMERA}, 1);
+        } else if (ContextCompat.checkSelfPermission(QRCodeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(QRCodeActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+        }
         {//设置右滑退出
             SlipBackClass slideBackLayout = new SlipBackClass(this);
             slideBackLayout.bind();
@@ -70,18 +75,6 @@ public class QRCodeActivity extends BackActivity {
             save.setOnClickListener(this);
             Button creatwithlogo = (Button) findViewById(R.id.creatwithlogo);    //生成带logo的二维码
             creatwithlogo.setOnClickListener(this);
-//            Button backButton = (Button) findViewById(R.id.backButton);
-//            backButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    finish();
-//                }
-//            });
-        }
-        if (ContextCompat.checkSelfPermission(QRCodeActivity.this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(QRCodeActivity.this, new String[]{android.Manifest.permission.CAMERA}, 1);
-        } else if (ContextCompat.checkSelfPermission(QRCodeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(QRCodeActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
         }
     }
 
@@ -150,13 +143,11 @@ public class QRCodeActivity extends BackActivity {
             case 1:
                 if (ContextCompat.checkSelfPermission(QRCodeActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(QRCodeActivity.this, "未获得相机权限，无法使用此功能", Toast.LENGTH_SHORT).show();
-                    finish();
                     break;
                 }
             case 2:
                 if (ContextCompat.checkSelfPermission(QRCodeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(QRCodeActivity.this, "未获得存储权限，无法使用此功能", Toast.LENGTH_SHORT).show();
-                    finish();
                     break;
                 }
         }

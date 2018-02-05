@@ -40,7 +40,6 @@ import com.example.myapplication.UI.SlipBackClass;
 import static com.example.myapplication.R.id.send;
 
 public class NotificationActivity extends BackActivity implements View.OnClickListener {
-    Button circular;    //绘制为圆形
     EditText title;
     EditText text;
     private Boolean circular_judge = false;    //判断是否裁剪为圆形
@@ -54,71 +53,29 @@ public class NotificationActivity extends BackActivity implements View.OnClickLi
         setTitleName("通知");
         setWindowColor("#fafafa");
         setTitleBackground(R.drawable.notification_bg);
-        /* 设置右滑退出 */
-        SlipBackClass slideBackLayout;
-        slideBackLayout = new SlipBackClass(this);
-        slideBackLayout.bind();
-        /* 设置右滑退出 */
+        new SlipBackClass(this).bind();//右滑退出
+        initView();
+    }
+
+    private void initView(){
         picture = (ImageView) findViewById(R.id.picture);
-        LinearLayout NotificationLinearLayout = (LinearLayout) findViewById(R.id.NotificationLinearLayout);
-        ViewGroup.LayoutParams layoutParams = NotificationLinearLayout.getLayoutParams();
-        layoutParams.height = ((WindowManager) this.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth() / 4;    //设置四个图标高度
-        NotificationLinearLayout.setLayoutParams(layoutParams);
-        ImageButton sign1 = (ImageButton) findViewById(R.id.sign1);
-        ImageButton sign2 = (ImageButton) findViewById(R.id.sign2);
-        ImageButton sign3 = (ImageButton) findViewById(R.id.sign3);
-        ImageButton sign4 = (ImageButton) findViewById(R.id.sign4);
-        Button send = (Button) findViewById(R.id.send);
-        Button alertDialog=(Button)findViewById(R.id.alertDialog);
-        circular = (Button) findViewById(R.id.circular);    //绘制为圆形
-        circular.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                circular_judge = true;
-                if (ContextCompat.checkSelfPermission(NotificationActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(NotificationActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                } else {
-                    openAlbum();
-                }
-            }
-        });
+        ((ImageButton) findViewById(R.id.sign1)).setOnClickListener(this);
+        ((ImageButton) findViewById(R.id.sign2)).setOnClickListener(this);
+        ((ImageButton) findViewById(R.id.sign3)).setOnClickListener(this);
+        ((ImageButton) findViewById(R.id.sign4)).setOnClickListener(this);
+        ((Button) findViewById(R.id.send)).setOnClickListener(this);
+        ((Button)findViewById(R.id.alertDialog)).setOnClickListener(this);
+        ((Button) findViewById(R.id.circular)).setOnClickListener(this);
+        ((Button) findViewById(R.id.choose_from_album)).setOnClickListener(this);
+        ((Button)findViewById(R.id.backButton)).setOnClickListener(this);
         title = (EditText) findViewById(R.id.title);
         text = (EditText) findViewById(R.id.text);
-        sign1.setOnClickListener(this);
-        sign2.setOnClickListener(this);
-        sign3.setOnClickListener(this);
-        sign4.setOnClickListener(this);
-        send.setOnClickListener(this);
-        alertDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder dialog=new AlertDialog.Builder(NotificationActivity.this);
-                dialog.setTitle("通知")
-                        .setMessage("请到 “设置” - “通知中心” - “应用通知” - “Tools” 中允许通知")
-                        .setPositiveButton("OK",null)
-                        .setCancelable(true)
-                        .show();
-            }
-        });
-        Button chooseFromAlbum = (Button) findViewById(R.id.choose_from_album);
-        chooseFromAlbum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(NotificationActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(NotificationActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                } else {
-                    openAlbum();
-                }
-            }
-        });
 
-        Button noficationback=(Button)findViewById(R.id.backButton);
-        noficationback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        /* 设置四个图标高度 */
+        LinearLayout NotificationLinearLayout = (LinearLayout) findViewById(R.id.NotificationLinearLayout);
+        ViewGroup.LayoutParams layoutParams = NotificationLinearLayout.getLayoutParams();
+        layoutParams.height = ((WindowManager) this.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth() / 4;
+        NotificationLinearLayout.setLayoutParams(layoutParams);
     }
 
     @Override
@@ -126,6 +83,32 @@ public class NotificationActivity extends BackActivity implements View.OnClickLi
         String gettitle = title.getText().toString();
         String gettext = text.getText().toString();
         switch (view.getId()) {
+            case R.id.backButton:
+                finish();
+                break;
+            case R.id.choose_from_album:
+                if (ContextCompat.checkSelfPermission(NotificationActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(NotificationActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                } else {
+                    openAlbum();
+                }
+                break;
+            case R.id.alertDialog:
+                AlertDialog.Builder dialog=new AlertDialog.Builder(NotificationActivity.this);
+                dialog.setTitle("通知")
+                        .setMessage("请到 “设置” - “通知中心” - “应用通知” - “Tools” 中允许通知")
+                        .setPositiveButton("OK",null)
+                        .setCancelable(true)
+                        .show();
+                break;
+            case R.id.circular://绘制为圆形
+                circular_judge = true;
+                if (ContextCompat.checkSelfPermission(NotificationActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(NotificationActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                } else {
+                    openAlbum();
+                }
+                break;
             case R.id.sign1:
                 bmp = BitmapFactory.decodeResource(getResources(), R.drawable.sign1);
                 break;
@@ -139,7 +122,6 @@ public class NotificationActivity extends BackActivity implements View.OnClickLi
                 bmp = BitmapFactory.decodeResource(getResources(), R.drawable.sign4);
                 break;
             case send:
-
         }
         Intent home=new Intent(Intent.ACTION_MAIN);    //返回桌面
         home.addCategory(Intent.CATEGORY_HOME);
@@ -223,8 +205,7 @@ public class NotificationActivity extends BackActivity implements View.OnClickLi
         return BitmapFactory.decodeFile(imagePath, opt);
     }
 
-    private Bitmap createCircleImage(Bitmap source, int min)    //将图片绘制为圆形
-    {
+    private Bitmap createCircleImage(Bitmap source, int min){//将图片绘制为圆形
         final Paint paint = new Paint();
         paint.setAntiAlias(true);
         Bitmap target = Bitmap.createBitmap(min, min, Bitmap.Config.ARGB_8888);    //产生一个同样大小的画布
@@ -236,14 +217,8 @@ public class NotificationActivity extends BackActivity implements View.OnClickLi
     }
 
     public static int getImageWidthHeight(String path) {    //获取相片宽度
-        //public static int[] getImageWidthHeight(String path){    //原方法定义
         BitmapFactory.Options options = new BitmapFactory.Options();
-        //最关键在此，把options.inJustDecodeBounds = true;
-        //这里再decodeFile()，返回的bitmap为空，但此时调用options.outHeight时，已经包含了图片的高了
         options.inJustDecodeBounds = true;
-        Bitmap bitmap = BitmapFactory.decodeFile(path, options); // 此时返回的bitmap为null
-        //ptions.outHeight为原始图片的高
-        //return new int[]{options.outWidth,options.outHeight};    //原方法返回值
         return options.outWidth;
     }
 

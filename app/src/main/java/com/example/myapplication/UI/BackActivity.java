@@ -18,6 +18,16 @@ import com.example.myapplication.R;
  */
 //作为Activity的主类，实现修改界面
 public abstract class BackActivity extends AppCompatActivity implements View.OnClickListener {
+    LinearLayout title;
+
+    public BackActivity(){
+//        title=(LinearLayout)View.generateViewId(R.id.titleLayout);
+
+        LinearLayout.LayoutParams layoutParams=
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+
+    }
 
     @Override
     public void onClick(View v){

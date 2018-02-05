@@ -13,29 +13,17 @@ import android.widget.Toast;
 import com.example.myapplication.UI.SlipBackClass;
 
 public class CounterActivity extends Activity implements View.OnClickListener {
-    Handler uiHandler = new Handler();
-    Button b0;
-    Button b1;
-    Button b2;
-    Button b3;
-    Button b4;
-    Button b5;
-    Button b6;
-    Button b7;
-    Button b8;
-    Button b9;
-    Button bb;
-    Button bc;
-    Button jia;
-    Button jian;
-    Button cheng;
-    Button chu;
-    Button deng;
-    Button point;
-    Button change;
-    boolean pointer = false;
-    EditText input;
-    String count = new String();
+    private Handler uiHandler = new Handler();
+    private boolean pointer = false;
+    private EditText input;
+    private String count = new String();
+    private int buttons[] = new int[]{
+            R.id.point, R.id.bc, R.id.bb, R.id.chu,
+            R.id.b7, R.id.b8, R.id.b9, R.id.cheng,
+            R.id.b4, R.id.b5, R.id.b6, R.id.jian,
+            R.id.b0, R.id.b1, R.id.b2, R.id.b3, R.id.jia,
+            R.id.b0, R.id.deng
+    };
 
 
     @Override
@@ -43,69 +31,22 @@ public class CounterActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_counter);
-        b0 = (Button) findViewById(R.id.b0);
-        b1 = (Button) findViewById(R.id.b1);
-        b2 = (Button) findViewById(R.id.b2);
-        b3 = (Button) findViewById(R.id.b3);
-        b4 = (Button) findViewById(R.id.b4);
-        b5 = (Button) findViewById(R.id.b5);
-        b6 = (Button) findViewById(R.id.b6);
-        b7 = (Button) findViewById(R.id.b7);
-        b8 = (Button) findViewById(R.id.b8);
-        b9 = (Button) findViewById(R.id.b9);
-        bb = (Button) findViewById(R.id.bb);
-        bc = (Button) findViewById(R.id.bc);
-        jia = (Button) findViewById(R.id.jia);
-        jian = (Button) findViewById(R.id.jian);
-        cheng = (Button) findViewById(R.id.cheng);
-        chu = (Button) findViewById(R.id.chu);
-        deng = (Button) findViewById(R.id.deng);
-        point = (Button) findViewById(R.id.point);
-        change = (Button) findViewById(R.id.change);
+
+        for (int i = 0; i < buttons.length; i++) {
+            ((Button) findViewById(buttons[i])).setOnClickListener(this);
+        }
         input = (EditText) findViewById(R.id.input);
-
-        /* 设置右滑退出 */
-        SlipBackClass slideBackLayout;
-        slideBackLayout = new SlipBackClass(this);
-        slideBackLayout.bind();
-        /* 设置右滑退出 */
-
-        b0.setOnClickListener(this);
-        b1.setOnClickListener(this);
-        b2.setOnClickListener(this);
-        b3.setOnClickListener(this);
-        b4.setOnClickListener(this);
-        b5.setOnClickListener(this);
-        b6.setOnClickListener(this);
-        b7.setOnClickListener(this);
-        b8.setOnClickListener(this);
-        b9.setOnClickListener(this);
-        bb.setOnClickListener(this);
-        bc.setOnClickListener(this);
-        jia.setOnClickListener(this);
-        jian.setOnClickListener(this);
-        cheng.setOnClickListener(this);
-        chu.setOnClickListener(this);
-        deng.setOnClickListener(this);
-        point.setOnClickListener(this);
-        change.setOnClickListener(this);
-        //修改通知栏
-        Window window = getWindow();
+        new SlipBackClass(this).bind();//右滑退出
+        Window window = getWindow();//修改通知栏
         window.setStatusBarColor(Color.parseColor("#e9191919"));//可以自定义状态栏颜色
     }
 
     @Override
-    public void onClick(View v) {
-        ButtonBackground color = new ButtonBackground();
-        switch (v.getId()) {
+    public void onClick(View view) {
+        BackColor color = new BackColor();
+        color.setView(view);
+        switch (view.getId()) {
             case R.id.b0:
-                color.start();
-                b0.setBackgroundColor(Color.parseColor("#2d313e"));
-                /*if (count.length() > 0) {
-                    if (count.charAt(count.length() - 1) == '0')
-                        if (count.charAt(0) == '0' && pointer == false)
-                            break;
-                }*/
                 if (count.length() == 1 && count.charAt(0) == '0')
                     break;
                 if (count.length() > 2)
@@ -115,57 +56,33 @@ public class CounterActivity extends Activity implements View.OnClickListener {
                 count += "0";
                 break;
             case R.id.b1:
-                color.start();
-                b1.setBackgroundColor(Color.parseColor("#2d313e"));
-                /*if (count.length() > 0) {
-                    if (count.charAt(0) == '0' && pointer == false)
-                        break;
-                }*/
                 count += "1";
                 break;
             case R.id.b2:
-                color.start();
-                b2.setBackgroundColor(Color.parseColor("#2d313e"));
                 count += "2";
                 break;
             case R.id.b3:
-                color.start();
-                b3.setBackgroundColor(Color.parseColor("#2d313e"));
                 count += "3";
                 break;
             case R.id.b4:
-                color.start();
-                b4.setBackgroundColor(Color.parseColor("#2d313e"));
                 count += "4";
                 break;
             case R.id.b5:
-                color.start();
-                b5.setBackgroundColor(Color.parseColor("#2d313e"));
                 count += "5";
                 break;
             case R.id.b6:
-                color.start();
-                b6.setBackgroundColor(Color.parseColor("#2d313e"));
                 count += "6";
                 break;
             case R.id.b7:
-                color.start();
-                b7.setBackgroundColor(Color.parseColor("#2d313e"));
                 count += "7";
                 break;
             case R.id.b8:
-                color.start();
-                b8.setBackgroundColor(Color.parseColor("#2d313e"));
                 count += "8";
                 break;
             case R.id.b9:
-                color.start();
-                b9.setBackgroundColor(Color.parseColor("#2d313e"));
                 count += "9";
                 break;
             case R.id.bb:
-                color.start();
-                bb.setBackgroundColor(Color.parseColor("#2d313e"));
                 if (count.length() > 0) {
                     if (count.charAt(count.length() - 1) == '.')
                         pointer = false;
@@ -173,14 +90,10 @@ public class CounterActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             case R.id.bc:
-                color.start();
-                bc.setBackgroundColor(Color.parseColor("#2d313e"));
                 pointer = false;
                 count = count.substring(0, 0);
                 break;
             case R.id.point:
-                color.start();
-                point.setBackgroundColor(Color.parseColor("#2d313e"));
                 if (count.length() == 0)
                     break;
                 if (pointer == true)
@@ -193,8 +106,6 @@ public class CounterActivity extends Activity implements View.OnClickListener {
                 count += ".";
                 break;
             case R.id.jia:
-                color.start();
-                jia.setBackgroundColor(Color.parseColor("#94343c"));
                 pointer = false;
                 if (count.length() == 0)
                     break;
@@ -204,8 +115,6 @@ public class CounterActivity extends Activity implements View.OnClickListener {
                 count += "+";
                 break;
             case R.id.jian:
-                color.start();
-                jian.setBackgroundColor(Color.parseColor("#94343c"));
                 pointer = false;
                 if (count.length() > 0) {
                     if (count.charAt(count.length() - 1) == '+' || count.charAt(count.length() - 1) == '-' || count.charAt(count.length() - 1) == '*' || count.charAt(count.length() - 1) == '/' || count.charAt(count.length() - 1) == '.')
@@ -214,8 +123,6 @@ public class CounterActivity extends Activity implements View.OnClickListener {
                 count += "-";
                 break;
             case R.id.cheng:
-                color.start();
-                cheng.setBackgroundColor(Color.parseColor("#94343c"));
                 pointer = false;
                 if (count.length() == 0)
                     break;
@@ -226,8 +133,6 @@ public class CounterActivity extends Activity implements View.OnClickListener {
                 count += "*";
                 break;
             case R.id.chu:
-                color.start();
-                chu.setBackgroundColor(Color.parseColor("#94343c"));
                 pointer = false;
                 if (count.length() == 0)
                     break;
@@ -238,8 +143,6 @@ public class CounterActivity extends Activity implements View.OnClickListener {
                 count += "/";
                 break;
             case R.id.deng:
-                color.start();
-                deng.setBackgroundColor(Color.parseColor("#2d313e"));
                 pointer = false;
                 if (count.length() == 0)
                     break;
@@ -278,6 +181,8 @@ public class CounterActivity extends Activity implements View.OnClickListener {
                     }
                 }
         }
+        color.start();
+        view.setBackgroundColor(Color.parseColor("#2d313e"));
         input.setText(count);
     }
 
@@ -379,35 +284,29 @@ public class CounterActivity extends Activity implements View.OnClickListener {
         return intenger[0];
     }
 
-    public class ButtonBackground extends Thread {
+    public class BackColor extends Thread {
+        private View view = null;
+
+        public void setView(View view) {
+            this.view = view;
+        }
+
         public void run() {
             try {
                 Thread.sleep(220);
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
-                        b0.setBackgroundColor(Color.parseColor("#373b4a"));
-                        b1.setBackgroundColor(Color.parseColor("#373b4a"));
-                        b2.setBackgroundColor(Color.parseColor("#373b4a"));
-                        b3.setBackgroundColor(Color.parseColor("#373b4a"));
-                        b4.setBackgroundColor(Color.parseColor("#373b4a"));
-                        b5.setBackgroundColor(Color.parseColor("#373b4a"));
-                        b6.setBackgroundColor(Color.parseColor("#373b4a"));
-                        b7.setBackgroundColor(Color.parseColor("#373b4a"));
-                        b8.setBackgroundColor(Color.parseColor("#373b4a"));
-                        b9.setBackgroundColor(Color.parseColor("#373b4a"));
-                        bb.setBackgroundColor(Color.parseColor("#373b4a"));
-                        bc.setBackgroundColor(Color.parseColor("#373b4a"));
-                        jia.setBackgroundColor(Color.parseColor("#a63d46"));
-                        jian.setBackgroundColor(Color.parseColor("#a63d46"));
-                        cheng.setBackgroundColor(Color.parseColor("#a63d46"));
-                        chu.setBackgroundColor(Color.parseColor("#a63d46"));
-                        deng.setBackgroundColor(Color.parseColor("#373b4a"));
-                        point.setBackgroundColor(Color.parseColor("#373b4a"));
+                        int id = view.getId();
+                        if (id == R.id.chu || id == R.id.cheng || id == R.id.jian || id == R.id.jia) {
+                            view.setBackgroundColor(Color.parseColor("#a63d46"));
+                        } else {
+                            view.setBackgroundColor(Color.parseColor("#373b4a"));
+                        }
                     }
                 };
                 uiHandler.post(runnable);
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
