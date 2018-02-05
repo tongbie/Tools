@@ -13,17 +13,17 @@ public class MyListView extends ListView {
 
     public MyListView(Context context) {
         super(context);
-        this.context=context;
+        this.context = context;
     }
 
     public MyListView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context=context;
+        this.context = context;
     }
 
     public MyListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.context=context;
+        this.context = context;
     }
 
     /* 实现ListView弹性效果 */
@@ -32,13 +32,13 @@ public class MyListView extends ListView {
         return super.overScrollBy(deltaX, deltaY,
                 scrollX, scrollY,
                 scrollRangeX, scrollRangeY,
-                maxOverScrollX, (int)dp(60),
+                maxOverScrollX, (int) dp(60),
                 isTouchEvent);
 
     }
 
-    private float dp(float px){
+    private float dp(float px) {
         float scale = context.getResources().getDisplayMetrics().density;
-        return px*scale+0.5f;
+        return px * scale + 0.5f;
     }
 }
